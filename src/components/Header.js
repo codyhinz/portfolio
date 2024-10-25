@@ -11,8 +11,7 @@ export const Header = () => {
   };
 
   return (
-    <header className="relative overflow-hidden rounded-lg mb-12 border-2 border-wow-border transform hover:scale-[1.01] transition-transform duration-300">
-      {/* Background Image Container */}
+    <header id="header" className="relative overflow-hidden rounded-lg mb-12 border-2 border-wow-border transform hover:scale-[1.01] transition-transform duration-300 scroll-mt-24">
       <div 
         className="absolute inset-0 -z-10"
         style={{
@@ -21,17 +20,16 @@ export const Header = () => {
           backgroundPosition: 'center',
         }}
       >
-        {/* Overlay */}
         <div className="absolute inset-0 bg-black/80 transition-colors duration-300" />
       </div>
 
       <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-wow-gold to-transparent opacity-50" />
       
-      <div className="flex gap-8 items-center p-8">
-        <div className="relative group">
+      <div className="flex flex-col md:flex-row gap-8 items-center p-4 md:p-8">
+        <div className="relative group w-32 md:w-48">
           <div className="absolute -inset-1 bg-gradient-to-r from-wow-gold via-wow-tan to-wow-gold rounded-lg blur opacity-25 group-hover:opacity-75 transition duration-1000 group-hover:duration-200" />
           <div 
-            className="relative w-48 h-68 border-4 border-wow-tan rounded-lg overflow-hidden bg-wow-bg cursor-pointer"
+            className="relative h-44 md:h-64 border-4 border-wow-tan rounded-lg overflow-hidden bg-wow-bg cursor-pointer"
             onClick={handleImageClick}
           >
             <img 
@@ -54,23 +52,23 @@ export const Header = () => {
           </div>
         </div>
         
-        <div className="flex-1 space-y-4">
-          <h1 className="text-6xl font-bold mb-4 text-wow-gold animate-pulse">
+        <div className="flex-1 space-y-4 text-center md:text-left">
+          <h1 className="text-4xl md:text-6xl font-bold mb-4 text-wow-gold animate-pulse">
             Cody Hinz
           </h1>
-          <div className="flex flex-wrap gap-4 mb-4">
-            <span className="px-3 py-1 bg-wow-gold/20 rounded-full border border-wow-gold/50 text-white">Level 28</span>
-            <span className="px-3 py-1 bg-wow-tan/20 rounded-full border border-wow-tan/50 text-white">Nicholasville, KY</span>
-            <span className="px-3 py-1 bg-wow-gold/20 rounded-full border border-wow-gold/50 text-white">Full-Stack Developer</span>
-            <span className="px-3 py-1 bg-wow-tan/20 rounded-full border border-wow-tan/50 text-white">Veteran Raider</span>
+          <div className="flex flex-wrap justify-center md:justify-start gap-2 md:gap-4 mb-4">
+            <span className="px-3 py-1 bg-wow-gold/20 rounded-full border border-wow-gold/50 text-white text-sm md:text-base">Level 28</span>
+            <span className="px-3 py-1 bg-wow-tan/20 rounded-full border border-wow-tan/50 text-white text-sm md:text-base">Nicholasville, KY</span>
+            <span className="px-3 py-1 bg-wow-gold/20 rounded-full border border-wow-gold/50 text-white text-sm md:text-base">Full-Stack Developer</span>
+            <span className="px-3 py-1 bg-wow-tan/20 rounded-full border border-wow-tan/50 text-white text-sm md:text-base">Veteran Raider</span>
           </div>
-          <p className="text-wow-tan text-lg italic border-l-4 border-wow-border pl-4">
+          <p className="text-wow-tan text-base md:text-lg italic border-l-4 border-wow-border pl-4">
             Hardcore WoW raider turned developer, bringing the same dedication and precision from raiding to coding since 2010.
           </p>
-          <p className="text-wow-tan text-lg italic border-l-4 border-wow-border pl-4">
+          <p className="text-wow-tan text-base md:text-lg italic border-l-4 border-wow-border pl-4">
             Hard work always pays off.
           </p>
-          <p className="text-wow-tan text-lg italic border-l-4 border-wow-border pl-4">
+          <p className="text-wow-tan text-base md:text-lg italic border-l-4 border-wow-border pl-4">
             I am your new 10x developer. Hire me!
           </p>
         </div>

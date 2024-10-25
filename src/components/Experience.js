@@ -3,7 +3,7 @@ import { workExperience } from '../constants/experienceData';
 import experienceBg from '../assets/stormwindwarroom.png';
 
 export const Experience = () => (
-  <section className="relative mb-12 rounded-lg border-2 border-wow-border group">
+  <section id="experience" className="relative mb-12 rounded-lg border-2 border-wow-border group scroll-mt-24">
     {/* Background Image Container */}
     <div 
       className="absolute inset-0 -z-10"

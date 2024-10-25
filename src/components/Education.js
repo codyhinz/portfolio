@@ -2,7 +2,7 @@ import React from 'react';
 import educationBg from '../assets/karalibrary.jpg';
 
 export const Education = () => (
-  <section className="relative mb-12 rounded-lg border-2 border-wow-border group">
+  <section id="education" className="relative mb-12 rounded-lg border-2 border-wow-border group scroll-mt-24">
     {/* Background Image Container */}
     <div 
       className="absolute inset-0 -z-10"

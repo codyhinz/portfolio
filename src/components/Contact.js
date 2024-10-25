@@ -28,7 +28,7 @@ export const Contact = () => {
   };
 
   return (
-    <section className="relative rounded-lg border-2 border-wow-border group">
+    <section id="contact" className="relative rounded-lg border-2 border-wow-border group scroll-mt-24">
       {/* Background Image Container */}
       <div 
         className="absolute inset-0 -z-10"

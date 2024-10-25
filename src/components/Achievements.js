@@ -1,7 +1,7 @@
 import React from 'react';
 
 export const Achievements = ({ achievements }) => (
-  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-12">
+  <div id="achievements" className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-12 scroll-mt-24">
     {achievements.map((achievement) => (
       <div
         key={achievement.id}

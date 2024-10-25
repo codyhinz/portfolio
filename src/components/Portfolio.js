@@ -6,10 +6,10 @@ import { Contact } from './Contact';
 import { Education } from './Education';
 import { Experience } from './Experience';
 import { Header } from './Header';
+import { Navigation } from './Navigation';
 import { ParsePerformance } from './ParsePerformance';
 import { Skills } from './Skills';
 
-// Import your background image - save it as 'icecrown.jpg' in assets folder
 import backgroundImage from '../assets/bt.png';
 
 const Portfolio = () => {
@@ -44,8 +44,10 @@ const Portfolio = () => {
         <div className="absolute inset-0 bg-gradient-to-b from-wow-bg/95 via-wow-bg/98 to-wow-bg opacity-95" />
       </div>
 
+      <Navigation />
+      
       {/* Content Container */}
-      <div className="relative z-10 min-h-screen p-8">
+      <div className="relative z-10 min-h-screen px-4 sm:px-6 md:px-8 pt-16 sm:pt-20">
         <SocialLinks />
         <Header />
         <Achievements achievements={achievements} />

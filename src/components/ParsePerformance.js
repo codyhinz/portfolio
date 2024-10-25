@@ -23,7 +23,7 @@ export const ParsePerformance = () => {
   };
 
   return (
-    <div className="mb-12 grid grid-cols-1 md:grid-cols-3 gap-6">
+    <div id="parse-performance" className="mb-12 grid grid-cols-1 md:grid-cols-3 gap-6 scroll-mt-24">
       {parsePerformances.map((char) => (
         <div
           key={char.id}

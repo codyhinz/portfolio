@@ -24,7 +24,7 @@ const classIcons = {
 };
 
 export const ClassSelection = ({ selectedClass, setSelectedClass }) => (
-  <div className="relative mb-12 rounded-lg border-2 border-wow-border group">
+  <div id="class-selection" className="relative mb-12 rounded-lg border-2 border-wow-border group scroll-mt-24">
     {/* Background remains the same */}
     <div 
       className="absolute inset-0 -z-10 transition-opacity duration-500"

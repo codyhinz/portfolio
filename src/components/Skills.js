@@ -39,7 +39,7 @@ const getRandomColor = () => {
 };
 
 export const Skills = () => (
-  <section className="relative mb-12 rounded-lg border-2 border-wow-border group">
+  <section id="skills" className="relative mb-12 rounded-lg border-2 border-wow-border group scroll-mt-24">
     {/* Background Image Container */}
     <div 
       className="absolute inset-0 -z-10"

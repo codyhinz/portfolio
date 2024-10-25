@@ -3,6 +3,17 @@ import { parsePerformances } from '../constants/parseData';
 
 export const ParsePerformance = () => {
   const getParseColor = (parse) => {
+    if (parse === 100) return '#E5CC80'; // Perfect
+    if (parse >= 99) return '#E268A8'; // Legendary
+    if (parse >= 95) return '#FF8000'; // Mythic
+    if (parse >= 75) return '#A335EE'; // Epic
+    if (parse >= 50) return '#0070dd'; // Rare
+    if (parse >= 25) return '#1eff00'; // Uncommon
+    return '#666666'; // Common
+  };
+
+  const getParseTextColor = (parse) => {
+    if (parse === 100) return 'text-[#E5CC80]'; // Perfect
     if (parse >= 99) return 'text-[#E268A8]'; // Legendary
     if (parse >= 95) return 'text-[#FF8000]'; // Mythic
     if (parse >= 75) return 'text-[#A335EE]'; // Epic
@@ -18,33 +29,55 @@ export const ParsePerformance = () => {
           key={char.id}
           className="bg-black/30 rounded-lg p-6 border-2 border-wow-border hover:border-wow-gold transition-colors duration-300 relative group"
         >
-          {/* Top Parse Indicator */}
-          <div 
-            className="absolute -top-3 -right-3 w-12 h-12 rounded-full bg-black/80 border-2 border-wow-gold flex items-center justify-center text-lg font-bold"
-            style={{ color: char.classColor }}
-          >
-            {char.icon}
+          {/* Spec Icon in Top Right Corner */}
+          <div className="absolute -top-3 -right-3 w-12 h-12 rounded-full bg-black/80 border-2 border-wow-gold flex items-center justify-center">
+            <img
+              src={char.specIcon}
+              alt={`${char.spec} icon`}
+              className="w-8 h-8"
+            />
           </div>
 
-          {/* Character Header */}
-          <div className="mb-4">
-            <h3 
-              className="text-xl font-bold mb-1" 
-              style={{ color: char.classColor }}
-            >
-              {char.characterName}
-            </h3>
-            <p className="text-wow-tan text-sm">
-              {char.spec} {char.class}
-            </p>
+          {/* Character Profile Section */}
+          <div className="flex items-start gap-4 mb-4">
+            {/* Profile Picture */}
+            <div className="relative">
+              <img
+                src={char.profilePicture}
+                alt={char.characterName}
+                className="w-16 h-16 rounded-lg border-2 object-cover"
+                style={{ borderColor: char.classColor }}
+              />
+            </div>
+            
+            {/* Character Info */}
+            <div>
+              <div className="flex items-center gap-2">
+                <h3 
+                  className="text-xl font-bold" 
+                  style={{ color: char.classColor }}
+                >
+                  {char.characterName}
+                </h3>
+                <span style={{ color: char.classColor }}>
+                  {char.level}
+                </span>
+              </div>
+              <p style={{ color: char.classColor }} className="text-sm">
+                {char.spec} {char.class}
+              </p>
+              <p className="text-wow-gold text-sm">
+                {char.realm}
+              </p>
+            </div>
           </div>
 
           {/* Parse Stats */}
           <div className="space-y-3">
             <div className="bg-black/20 p-3 rounded border border-wow-border">
               <div className="flex justify-between items-center mb-1">
-                <span className="text-wow-tan text-sm">Overall Parse</span>
-                <span className={`font-bold ${getParseColor(char.overallParse)}`}>
+                <span className="text-sm" style={{ color: char.classColor }}>Overall Parse</span>
+                <span className={`font-bold ${getParseTextColor(char.overallParse)}`}>
                   {char.overallParse}
                 </span>
               </div>
@@ -53,7 +86,7 @@ export const ParsePerformance = () => {
                   className="h-2 rounded-full transition-all duration-500"
                   style={{
                     width: `${char.overallParse}%`,
-                    backgroundColor: char.classColor
+                    backgroundColor: getParseColor(char.overallParse)
                   }}
                 />
               </div>
@@ -61,8 +94,8 @@ export const ParsePerformance = () => {
 
             <div className="bg-black/20 p-3 rounded border border-wow-border">
               <div className="flex justify-between items-center mb-1">
-                <span className="text-wow-tan text-sm">Best Parse</span>
-                <span className={`font-bold ${getParseColor(char.bestParse)}`}>
+                <span className="text-sm" style={{ color: char.classColor }}>Best Parse</span>
+                <span className={`font-bold ${getParseTextColor(char.bestParse)}`}>
                   {char.bestParse}
                 </span>
               </div>
@@ -71,7 +104,7 @@ export const ParsePerformance = () => {
                   className="h-2 rounded-full transition-all duration-500"
                   style={{
                     width: `${char.bestParse}%`,
-                    backgroundColor: char.classColor
+                    backgroundColor: getParseColor(char.bestParse)
                   }}
                 />
               </div>
@@ -79,8 +112,8 @@ export const ParsePerformance = () => {
 
             <div className="bg-black/20 p-3 rounded border border-wow-border">
               <div className="flex justify-between items-center mb-1">
-                <span className="text-wow-tan text-sm">iLvl Parse</span>
-                <span className={`font-bold ${getParseColor(char.ilvlParse)}`}>
+                <span className="text-sm" style={{ color: char.classColor }}>iLvl Parse</span>
+                <span className={`font-bold ${getParseTextColor(char.ilvlParse)}`}>
                   {char.ilvlParse}
                 </span>
               </div>
@@ -89,7 +122,7 @@ export const ParsePerformance = () => {
                   className="h-2 rounded-full transition-all duration-500"
                   style={{
                     width: `${char.ilvlParse}%`,
-                    backgroundColor: char.classColor
+                    backgroundColor: getParseColor(char.ilvlParse)
                   }}
                 />
               </div>
@@ -99,8 +132,8 @@ export const ParsePerformance = () => {
           {/* Raid Info */}
           <div className="mt-4 pt-4 border-t border-wow-border">
             <div className="flex justify-between items-center">
-              <span className="text-wow-tan text-sm">{char.tierName}</span>
-              <span className="text-wow-gold text-sm">{char.kills} Kills</span>
+              <span className="text-sm" style={{ color: char.classColor }}>{char.tierName}</span>
+              <span className="text-sm" style={{ color: char.classColor }}>{char.kills} Kills</span>
             </div>
           </div>
 

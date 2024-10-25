@@ -17,7 +17,7 @@ const WOW_CLASS_COLORS = [
 ];
 
 const getSkillColor = (level) => {
-  if (level === 100) return 'from-[#c79c6e] to-[#c79c6e]/80'; // Perfect (Tan)
+  if (level === 100) return 'from-[#E5CC80] to-[#E5CC80]/80'; // Perfect (Tan)
   if (level >= 99) return 'from-[#E268A8] to-[#E268A8]/80'; // Legendary
   if (level >= 95) return 'from-[#FF8000] to-[#FF8000]/80'; // Mythic
   if (level >= 75) return 'from-[#A335EE] to-[#A335EE]/80'; // Epic
@@ -27,7 +27,7 @@ const getSkillColor = (level) => {
 };
 
 const getTextColor = (level) => {
-  if (level === 100) return 'text-[#c79c6e]'; // Perfect (Tan)
+  if (level === 100) return 'text-[#E5CC80]'; // Perfect (Tan)
   if (level >= 99) return 'text-[#E268A8]'; // Legendary
   if (level >= 95) return 'text-[#FF8000]'; // Mythic
   if (level >= 75) return 'text-[#A335EE]'; // Epic

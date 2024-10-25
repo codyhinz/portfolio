@@ -1,5 +1,5 @@
 import React from 'react';
-import pfp from '../assets/pfp.png';
+import pfp from '../assets/pfp.jpg';
 
 export const Header = () => (
   <header className="relative overflow-hidden rounded-lg bg-black/50 p-8 mb-12 border-2 border-wow-border transform hover:scale-[1.01] transition-transform duration-300">

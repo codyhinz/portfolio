@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import pfp from '../assets/pfp.jpg';
-import pfp2 from '../assets/pfp.png'; // Add this line to import your second image
+import pfp2 from '../assets/pfp.png';
+// Import your background image
+import headerBg from '../assets/backgrounds/orgthroneroom.jpg';
 
 export const Header = () => {
   const [isMainPicture, setIsMainPicture] = useState(true);
@@ -10,9 +12,23 @@ export const Header = () => {
   };
 
   return (
-    <header className="relative overflow-hidden rounded-lg bg-black/50 p-8 mb-12 border-2 border-wow-border transform hover:scale-[1.01] transition-transform duration-300">
+    <header className="relative overflow-hidden rounded-lg mb-12 border-2 border-wow-border transform hover:scale-[1.01] transition-transform duration-300">
+      {/* Background Image Container */}
+      <div 
+        className="absolute inset-0 -z-10"
+        style={{
+          backgroundImage: `url(${headerBg})`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+        }}
+      >
+        {/* Overlay */}
+        <div className="absolute inset-0 bg-black/80 transition-colors duration-300" />
+      </div>
+
       <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-wow-gold to-transparent opacity-50" />
-      <div className="flex gap-8 items-center">
+      
+      <div className="flex gap-8 items-center p-8">
         <div className="relative group">
           <div className="absolute -inset-1 bg-gradient-to-r from-wow-gold via-wow-tan to-wow-gold rounded-lg blur opacity-25 group-hover:opacity-75 transition duration-1000 group-hover:duration-200" />
           <div 

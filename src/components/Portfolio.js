@@ -9,7 +9,8 @@ import { Header } from './Header';
 import { ParsePerformance } from './ParsePerformance';
 import { Skills } from './Skills';
 
-
+// Import your background image - save it as 'icecrown.jpg' in assets folder
+import backgroundImage from '../assets/bt.png';
 
 const Portfolio = () => {
   const [selectedClass, setSelectedClass] = useState('warrior');
@@ -27,19 +28,37 @@ const Portfolio = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-wow-bg via-wow-bg/95 to-wow-bg text-white p-8 relative">
-      <SocialLinks />
-      <Header />
-      <Achievements achievements={achievements} />
-      <Education />
-      <Experience />
-      <ClassSelection 
-        selectedClass={selectedClass}
-        setSelectedClass={setSelectedClass}
-      />
-      <Skills />
-      <ParsePerformance />
-      <Contact />
+    <div className="relative min-h-screen">
+      {/* Background Image Container */}
+      <div 
+        className="fixed inset-0 z-0"
+        style={{
+          backgroundImage: `url(${backgroundImage})`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat',
+          backgroundAttachment: 'fixed',
+        }}
+      >
+        {/* Dark overlay for better readability */}
+        <div className="absolute inset-0 bg-gradient-to-b from-wow-bg/95 via-wow-bg/98 to-wow-bg opacity-95" />
+      </div>
+
+      {/* Content Container */}
+      <div className="relative z-10 min-h-screen p-8">
+        <SocialLinks />
+        <Header />
+        <Achievements achievements={achievements} />
+        <Education />
+        <Experience />
+        <ClassSelection 
+          selectedClass={selectedClass}
+          setSelectedClass={setSelectedClass}
+        />
+        <Skills />
+        <ParsePerformance />
+        <Contact />
+      </div>
     </div>
   );
 };

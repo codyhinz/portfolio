@@ -1,22 +1,18 @@
-// First, import the icons at the top of your ClassSelection.js
 import React from 'react';
 import { classes } from '../constants/classData';
 import warriorBg from '../assets/warriororderhall.png';
 import deathknightBg from '../assets/deathknightorderhall.jpg';
 import druidBg from '../assets/druidorderhall.jpg';
-// Add your icon imports
 import warriorIcon from '../assets/warrior.png';
 import deathknightIcon from '../assets/deathknight.png';
 import druidIcon from '../assets/druid.png';
 
-// Update your classBackgrounds object
 const classBackgrounds = {
   warrior: warriorBg,
   deathknight: deathknightBg,
   druid: druidBg,
 };
 
-// Add an icons mapping object
 const classIcons = {
   warrior: warriorIcon,
   deathknight: deathknightIcon,
@@ -25,7 +21,6 @@ const classIcons = {
 
 export const ClassSelection = ({ selectedClass, setSelectedClass }) => (
   <div id="class-selection" className="relative mb-12 rounded-lg border-2 border-wow-border group scroll-mt-24">
-    {/* Background remains the same */}
     <div 
       className="absolute inset-0 -z-10 transition-opacity duration-500"
       style={{

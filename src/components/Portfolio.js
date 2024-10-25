@@ -1,4 +1,3 @@
-// Portfolio.js
 import React, { useState, useEffect } from 'react';
 import { Achievements } from './Achievements';
 import { ClassSelection } from './ClassSelection';

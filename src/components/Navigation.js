@@ -29,7 +29,6 @@ export const Navigation = () => {
     <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
       isScrolled || isOpen ? 'bg-wow-bg/95 backdrop-blur-sm' : 'bg-transparent'
     }`}>
-      {/* Desktop Navigation - reduced height from h-16 to h-12 */}
       <div className="hidden lg:flex justify-center items-center h-12 px-4 gap-4 xl:gap-6 max-w-7xl mx-auto">
         {navItems.map((item) => (
           <a
@@ -42,7 +41,6 @@ export const Navigation = () => {
         ))}
       </div>
 
-      {/* Mobile Navigation - reduced padding and height */}
       <div className="lg:hidden">
         <div className="flex items-center px-3">
           <button
@@ -55,7 +53,6 @@ export const Navigation = () => {
           <span className="text-wow-gold py-2 text-sm ml-2">Cody Hinz Portfolio</span>
         </div>
 
-        {/* Mobile Menu - adjusted top position */}
         <div
           className={`fixed left-0 right-0 bg-wow-bg/95 backdrop-blur-sm border-t border-wow-border shadow-lg transition-all duration-300 ${
             isOpen ? 'top-[40px] opacity-100 visible' : 'top-[40px] opacity-0 invisible'

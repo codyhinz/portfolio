@@ -85,7 +85,7 @@ export const Contact = () => {
 
           <div className="flex items-center justify-center gap-2 p-4 rounded-lg bg-gradient-to-b from-wow-gold/20 to-transparent border border-wow-border">
             <MapPin className="w-5 h-5 text-wow-gold" />
-            <span className="text-wow-tan">Lexington, KY 40517</span>
+            <span className="text-wow-tan">Nicholasville, KY 40356</span>
           </div>
 
           <div className="relative">

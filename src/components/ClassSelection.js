@@ -16,7 +16,9 @@ export const ClassSelection = ({ selectedClass, setSelectedClass }) => (
           }`}
         >
           <span className="text-2xl mr-2">{value.icon}</span>
-          <span className="text-wow-gold">{key.charAt(0).toUpperCase() + key.slice(1)}</span>
+          <span className="text-wow-gold">
+            {key === 'deathknight' ? 'Death Knight' : key.charAt(0).toUpperCase() + key.slice(1)}
+          </span>
         </button>
       ))}
     </div>

@@ -1,11 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import { Header } from './Header';
 import { SocialLinks } from './SocialLinks';
 import { Achievements } from './Achievements';
-import { Education } from './Education';
 import { ClassSelection } from './ClassSelection';
-import { Skills } from './Skills';
 import { Contact } from './Contact';
+import { Education } from './Education';
+import { Experience } from './Experience';
+import { Header } from './Header';
+import { ParsePerformance } from './ParsePerformance';
+import { Skills } from './Skills';
+
+
 
 const Portfolio = () => {
   const [selectedClass, setSelectedClass] = useState('warrior');
@@ -28,11 +32,13 @@ const Portfolio = () => {
       <Header />
       <Achievements achievements={achievements} />
       <Education />
+      <Experience />
       <ClassSelection 
         selectedClass={selectedClass}
         setSelectedClass={setSelectedClass}
       />
       <Skills />
+      <ParsePerformance />
       <Contact />
     </div>
   );

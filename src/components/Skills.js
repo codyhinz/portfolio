@@ -17,6 +17,7 @@ const WOW_CLASS_COLORS = [
 ];
 
 const getSkillColor = (level) => {
+  if (level === 100) return 'from-[#c79c6e] to-[#c79c6e]/80'; // Perfect (Tan)
   if (level >= 99) return 'from-[#E268A8] to-[#E268A8]/80'; // Legendary
   if (level >= 95) return 'from-[#FF8000] to-[#FF8000]/80'; // Mythic
   if (level >= 75) return 'from-[#A335EE] to-[#A335EE]/80'; // Epic
@@ -26,6 +27,7 @@ const getSkillColor = (level) => {
 };
 
 const getTextColor = (level) => {
+  if (level === 100) return 'text-[#c79c6e]'; // Perfect (Tan)
   if (level >= 99) return 'text-[#E268A8]'; // Legendary
   if (level >= 95) return 'text-[#FF8000]'; // Mythic
   if (level >= 75) return 'text-[#A335EE]'; // Epic
@@ -38,9 +40,30 @@ const getRandomColor = () => {
   return WOW_CLASS_COLORS[Math.floor(Math.random() * WOW_CLASS_COLORS.length)];
 };
 
+const getOrdinalSuffix = (number) => {
+  if (number === 100) return 'th';
+  
+  const lastDigit = number % 10;
+  const lastTwoDigits = number % 100;
+  
+  if (lastTwoDigits >= 11 && lastTwoDigits <= 13) {
+    return 'th';
+  }
+  
+  switch (lastDigit) {
+    case 1:
+      return 'st';
+    case 2:
+      return 'nd';
+    case 3:
+      return 'rd';
+    default:
+      return 'th';
+  }
+};
+
 export const Skills = () => (
   <section id="skills" className="relative mb-12 rounded-lg border-2 border-wow-border group scroll-mt-24">
-    {/* Background Image Container */}
     <div 
       className="absolute inset-0 -z-10"
       style={{
@@ -49,7 +72,6 @@ export const Skills = () => (
         backgroundPosition: 'center',
       }}
     >
-      {/* Overlay */}
       <div className="absolute inset-0 bg-black/85 group-hover:bg-black/80 transition-colors duration-300" />
     </div>
 
@@ -67,7 +89,7 @@ export const Skills = () => (
                       {skill.name}
                     </span>
                     <span className={`font-bold ${getTextColor(skill.level)}`}>
-                      Level {skill.level}
+                      {skill.level}{getOrdinalSuffix(skill.level)} Percentile
                     </span>
                   </div>
                   <div className="w-full bg-black/40 rounded-full h-2.5 overflow-hidden">

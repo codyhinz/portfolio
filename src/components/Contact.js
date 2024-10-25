@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Mail, MapPin, Phone, Check, Copy, ExternalLink } from 'lucide-react';
-// Import your background image
 import contactBg from '../assets/shattrath.jpg';
 
 export const Contact = () => {
@@ -28,7 +27,7 @@ export const Contact = () => {
   };
 
   return (
-    <section id="contact" className="relative rounded-lg border-2 border-wow-border group scroll-mt-24">
+    <section id="contact" className="relative rounded-lg border-2 border-wow-border group scroll-mt-24 mb-6">
       {/* Background Image Container */}
       <div 
         className="absolute inset-0 -z-10"

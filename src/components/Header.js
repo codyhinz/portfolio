@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Github, Linkedin } from 'lucide-react';
 import pfp from '../assets/pfp.jpg';
 import pfp2 from '../assets/pfp.png';
 import headerBg from '../assets/orgthroneroom.jpg';
@@ -11,7 +12,7 @@ export const Header = () => {
   };
 
   return (
-    <header id="header" className="relative overflow-hidden rounded-lg mb-12 border-2 border-wow-border transform hover:scale-[1.01] transition-transform duration-300 scroll-mt-24">
+    <header className="relative overflow-hidden rounded-lg mb-12 border-2 border-wow-border transform hover:scale-[1.01] transition-transform duration-300 scroll-mt-24 mt-6">
       <div 
         className="absolute inset-0 -z-10"
         style={{
@@ -24,6 +25,26 @@ export const Header = () => {
       </div>
 
       <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-wow-gold to-transparent opacity-50" />
+      
+      {/* Social Links */}
+      <div className="absolute top-4 right-4 flex gap-4">
+        <a
+          href="https://github.com/codyhinz"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="p-2 bg-wow-bg/80 border border-wow-border rounded-lg hover:bg-wow-gold/20 transition-all duration-300 hover:scale-110"
+        >
+          <Github className="w-6 h-6 text-wow-gold" />
+        </a>
+        <a
+          href="https://linkedin.com/in/cody-hinz"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="p-2 bg-wow-bg/80 border border-wow-border rounded-lg hover:bg-wow-gold/20 transition-all duration-300 hover:scale-110"
+        >
+          <Linkedin className="w-6 h-6 text-wow-gold" />
+        </a>
+      </div>
       
       <div className="flex flex-col md:flex-row gap-8 items-center p-4 md:p-8">
         <div className="relative group w-32 md:w-48">

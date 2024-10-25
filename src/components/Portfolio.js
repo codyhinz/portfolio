@@ -1,5 +1,5 @@
+// Portfolio.js
 import React, { useState, useEffect } from 'react';
-import { SocialLinks } from './SocialLinks';
 import { Achievements } from './Achievements';
 import { ClassSelection } from './ClassSelection';
 import { Contact } from './Contact';
@@ -28,8 +28,7 @@ const Portfolio = () => {
   }, []);
 
   return (
-    <div className="relative min-h-screen">
-      {/* Background Image Container */}
+    <div id="header" className="relative min-h-screen">
       <div 
         className="fixed inset-0 z-0"
         style={{
@@ -40,15 +39,12 @@ const Portfolio = () => {
           backgroundAttachment: 'fixed',
         }}
       >
-        {/* Dark overlay for better readability */}
         <div className="absolute inset-0 bg-gradient-to-b from-wow-bg/95 via-wow-bg/98 to-wow-bg opacity-95" />
       </div>
 
       <Navigation />
       
-      {/* Content Container */}
-      <div className="relative z-10 min-h-screen px-4 sm:px-6 md:px-8 pt-16 sm:pt-20">
-        <SocialLinks />
+      <div className="relative z-10 min-h-screen px-4 sm:px-6 md:px-8 pt-12 sm:pt-16">
         <Header />
         <Achievements achievements={achievements} />
         <Education />

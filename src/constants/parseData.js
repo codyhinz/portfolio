@@ -2,11 +2,16 @@
 import armsIcon from '../assets/arms.png';
 import frostIcon from '../assets/frost.png';
 import destructionIcon from '../assets/destruction.png';
+import arcaneIcon from '../assets/arcane.png';
+import furyIcon from '../assets/fury.png';
+import unholyIcon from '../assets/unholy.png';
 
 // Import character profiles
 import danzeldProfile from '../assets/danzeld.png';
 import unholydanProfile from '../assets/unholydan.png';
 import souldanProfile from '../assets/souldan.png';
+import magemandanProfile from '../assets/magemandan.png';
+import mntnmandanProfile from '../assets/mntnmandan.png';
 
 
 // Character class colors for reference
@@ -76,5 +81,56 @@ export const parsePerformances = [
     tierName: "Blackfathom Deeps",
     kills: 126,
     faction: "Horde"
-  }
+  },
+  {
+    id: 4,
+    characterName: "Magemandan",
+    level: 70,
+    spec: "Gnome Arcane",
+    class: "Mage",
+    realm: "Westfall (US)",
+    classColor: WOW_CLASS_COLORS.MAGE,
+    profilePicture: magemandanProfile,
+    specIcon: arcaneIcon,
+    overallParse: 99,
+    bestParse: 100,
+    ilvlParse: 99.5,
+    tierName: "Black Temple",
+    kills: 268,
+    faction: "Alliance"
+  },
+  {
+    id: 5,
+    characterName: "Mntnmandan",
+    level: 60,
+    spec: "Human Fury",
+    class: "Warrior",
+    realm: "Westfall (US)",
+    classColor: WOW_CLASS_COLORS.WARRIOR,
+    profilePicture: mntnmandanProfile,
+    specIcon: furyIcon,
+    overallParse: 96.9,
+    bestParse: 100,
+    ilvlParse: 99.1,
+    tierName: "Zul'Gurub",
+    kills: 39,
+    faction: "Alliance"
+  },
+  {
+    id: 6,
+    characterName: "Unholydan",
+    level: 80,
+    spec: "Human Unholy",
+    class: "Death Knight",
+    realm: "Westfall (US)",
+    classColor: WOW_CLASS_COLORS.DEATHKNIGHT,
+    profilePicture: unholydanProfile,
+    specIcon: unholyIcon,
+    overallParse: 98,
+    bestParse: 100,
+    ilvlParse: 99,
+    tierName: "Ulduar",
+    kills: 270,
+    faction: "Alliance"
+  },
 ];

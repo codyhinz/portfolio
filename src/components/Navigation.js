@@ -17,11 +17,11 @@ export const Navigation = () => {
   const navItems = [
     { label: 'About', href: '#header' },
     { label: 'Achievements', href: '#achievements' },
-    { label: 'Education', href: '#education' },
-    { label: 'Projects', href: '#projects' },
-    { label: 'Experience', href: '#experience' },
-    { label: 'Class Selection', href: '#class-selection' },
     { label: 'Skills', href: '#skills' },
+    { label: 'Education', href: '#education' },
+    { label: 'Experience', href: '#experience' },
+    { label: 'Projects', href: '#projects' },
+    { label: 'Developer Abilities', href: '#class-selection' },
     { label: 'Parse Performance', href: '#parse-performance' },
     { label: 'Contact', href: '#contact' }
   ];
@@ -51,7 +51,6 @@ export const Navigation = () => {
           >
             {isOpen ? <X size={20} /> : <Menu size={20} />}
           </button>
-          <span className="text-wow-gold py-2 text-sm ml-2">Cody Hinz Portfolio</span>
         </div>
 
         <div

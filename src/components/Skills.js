@@ -67,7 +67,7 @@ export const Skills = () => {
   const [skillsRef, isVisible] = useScrollAnimation(0.1);
 
   return (
-    <section ref={skillsRef} className="relative mb-12 rounded-lg border-2 border-wow-border group scroll-mt-24">
+    <section id="skills" ref={skillsRef} className="relative mb-12 rounded-lg border-2 border-wow-border group scroll-mt-24">
       <div 
         className="absolute inset-0 -z-10"
         style={{

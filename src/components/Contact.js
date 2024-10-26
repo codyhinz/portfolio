@@ -1,7 +1,6 @@
-// Contact.js (continued)
 import React, { useState } from 'react';
 import { useScrollAnimation } from '../hooks/useScrollAnimation';
-import { Mail, MapPin, Phone, Check, Copy, ExternalLink } from 'lucide-react';
+import { Mail, MapPin, Phone, Check, Copy, ExternalLink, FileDown } from 'lucide-react';
 import contactBg from '../assets/shattrath.jpg';
 
 export const Contact = () => {
@@ -55,7 +54,7 @@ export const Contact = () => {
           Contact Details
         </h2>
         
-        <div className="grid gap-6 md:grid-cols-3">
+        <div className="grid gap-6 md:grid-cols-4">
           {/* Email */}
           <div className={`relative animate-slide-up stagger-1 ${isVisible ? 'slide-up-end' : 'slide-up-start'}`}>
             {activeDropdown === 'email' && (
@@ -84,7 +83,7 @@ export const Contact = () => {
             <button
               onClick={() => toggleDropdown('email')}
               className="w-full flex items-center justify-center gap-2 p-4 rounded-lg bg-gradient-to-b from-wow-gold/20 
-                to-transparent border border-wow-border hover:border-wow-gold transition-all duration-300 group/button "
+                to-transparent border border-wow-border hover:border-wow-gold transition-all duration-300 group/button"
             >
               <Mail className="w-5 h-5 text-wow-gold group-hover/button:scale-110 transition-transform duration-300" />
               <span className="text-white">codyhinz@gmail.com</span>
@@ -94,7 +93,7 @@ export const Contact = () => {
           {/* Address */}
           <div className={`animate-slide-up stagger-2 ${isVisible ? 'slide-up-end' : 'slide-up-start'}`}>
             <div className="flex items-center justify-center gap-2 p-4 rounded-lg bg-gradient-to-b from-wow-gold/20 
-              to-transparent border border-wow-border ">
+              to-transparent border border-wow-border">
               <MapPin className="w-5 h-5 text-wow-gold animate-float" />
               <span className="text-white">Nicholasville, KY 40356</span>
             </div>
@@ -128,10 +127,45 @@ export const Contact = () => {
             <button
               onClick={() => toggleDropdown('phone')}
               className="w-full flex items-center justify-center gap-2 p-4 rounded-lg bg-gradient-to-b from-wow-gold/20 
-                to-transparent border border-wow-border hover:border-wow-gold transition-all duration-300 group/button "
+                to-transparent border border-wow-border hover:border-wow-gold transition-all duration-300 group/button"
             >
               <Phone className="w-5 h-5 text-wow-gold group-hover/button:scale-110 transition-transform duration-300" />
               <span className="text-white">859-396-5590</span>
+            </button>
+          </div>
+
+          {/* Resume Downloads */}
+          <div className={`relative animate-slide-up stagger-4 ${isVisible ? 'slide-up-end' : 'slide-up-start'}`}>
+            {activeDropdown === 'resume' && (
+              <div className={`absolute bottom-full left-0 w-full mb-2 bg-black/90 border border-wow-gold 
+                rounded-lg overflow-hidden animate-slide-up ${activeDropdown === 'resume' ? 'slide-up-end' : 'slide-up-start'}`}>
+                <a
+                  href="/resume-simple.docx"
+                  download
+                  className="flex items-center gap-2 p-3 hover:bg-wow-gold/20 transition-colors w-full text-left text-white"
+                  onClick={() => setActiveDropdown(null)}
+                >
+                  <FileDown className="w-4 h-4 text-wow-gold" />
+                  <span>Simple Resume</span>
+                </a>
+                <a
+                  href="/resume-complete.pdf"
+                  download
+                  className="flex items-center gap-2 p-3 hover:bg-wow-gold/20 transition-colors w-full text-left text-white"
+                  onClick={() => setActiveDropdown(null)}
+                >
+                  <FileDown className="w-4 h-4 text-wow-gold" />
+                  <span>Complete Resume</span>
+                </a>
+              </div>
+            )}
+            <button
+              onClick={() => toggleDropdown('resume')}
+              className="w-full flex items-center justify-center gap-2 p-4 rounded-lg bg-gradient-to-b from-wow-gold/20 
+                to-transparent border border-wow-border hover:border-wow-gold transition-all duration-300 group/button"
+            >
+              <FileDown className="w-5 h-5 text-wow-gold group-hover/button:scale-110 transition-transform duration-300" />
+              <span className="text-white">Download Resume</span>
             </button>
           </div>
         </div>

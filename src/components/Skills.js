@@ -1,4 +1,5 @@
 import React from 'react';
+import { useScrollAnimation } from '../hooks/useScrollAnimation';
 import { technicalSkills } from '../constants/skillsData';
 import karazhanLibrary from '../assets/karalibrary.jpg';
 
@@ -62,50 +63,66 @@ const getOrdinalSuffix = (number) => {
   }
 };
 
-export const Skills = () => (
-  <section id="skills" className="relative mb-12 rounded-lg border-2 border-wow-border group scroll-mt-24">
-    <div 
-      className="absolute inset-0 -z-10"
-      style={{
-        backgroundImage: `url(${karazhanLibrary})`,
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-      }}
-    >
-      <div className="absolute inset-0 bg-black/85 group-hover:bg-black/80 transition-colors duration-300" />
-    </div>
+export const Skills = () => {
+  const [skillsRef, isVisible] = useScrollAnimation(0.1);
 
-    <div className="p-8">
-      <h2 className="text-3xl font-bold text-wow-gold mb-6">Skill Tree</h2>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-        {technicalSkills.map((category, idx) => (
-          <div key={idx} className="bg-black/20 p-6 rounded-lg border border-wow-border">
-            <h3 className="text-xl font-bold text-wow-gold mb-4">{category.name}</h3>
-            <div className="space-y-4">
-              {category.skills.map((skill, skillIdx) => (
-                <div key={skillIdx}>
-                  <div className="flex justify-between text-sm mb-1">
-                    <span className={`${getRandomColor()} font-bold hover:scale-105 transition-transform duration-300`}>
-                      {skill.name}
-                    </span>
-                    <span className={`font-bold ${getTextColor(skill.level)}`}>
-                      {skill.level}{getOrdinalSuffix(skill.level)} Percentile
-                    </span>
-                  </div>
-                  <div className="w-full bg-black/40 rounded-full h-2.5 overflow-hidden">
-                    <div 
-                      className={`bg-gradient-to-r ${getSkillColor(skill.level)} h-2.5 rounded-full transition-all duration-500`}
-                      style={{ width: `${skill.level}%` }}
-                    />
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        ))}
+  return (
+    <section ref={skillsRef} className="relative mb-12 rounded-lg border-2 border-wow-border group scroll-mt-24">
+      <div 
+        className="absolute inset-0 -z-10"
+        style={{
+          backgroundImage: `url(${karazhanLibrary})`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+        }}
+      >
+        <div className="absolute inset-0 bg-black/85 group-hover:bg-black/80 transition-colors duration-300" />
       </div>
-    </div>
-  </section>
-);
+
+      <div className="p-8">
+        <h2 className={`text-3xl font-bold text-wow-gold mb-6 animate-slide-right ${isVisible ? 'slide-right-end' : 'slide-right-start'}`}>
+          Skill Tree
+        </h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          {technicalSkills.map((category, idx) => (
+            <div 
+              key={idx} 
+              className={`bg-black/20 p-6 rounded-lg border border-wow-border 
+                animate-scale stagger-${idx + 1} ${isVisible ? 'scale-end' : 'scale-start'}`}
+            >
+              <h3 className="text-xl font-bold text-wow-gold mb-4">{category.name}</h3>
+              <div className="space-y-4">
+                {category.skills.map((skill, skillIdx) => (
+                  <div 
+                    key={skillIdx}
+                    className={`animate-slide-right stagger-${skillIdx + 1} ${isVisible ? 'slide-right-end' : 'slide-right-start'}`}
+                  >
+                    <div className="flex justify-between text-sm mb-1">
+                      <span className={`${getRandomColor()} font-bold hover:scale-105 transition-transform duration-300`}>
+                        {skill.name}
+                      </span>
+                      <span className={`font-bold ${getTextColor(skill.level)}`}>
+                        {skill.level}{getOrdinalSuffix(skill.level)} Percentile
+                      </span>
+                    </div>
+                    <div className="w-full bg-black/40 rounded-full h-2.5 overflow-hidden">
+                      <div 
+                        className={`bg-gradient-to-r ${getSkillColor(skill.level)} h-2.5 rounded-full transition-all duration-1000 ease-out`}
+                        style={{ 
+                          width: isVisible ? `${skill.level}%` : '0%',
+                          transitionDelay: `${skillIdx * 100}ms`
+                        }}
+                      />
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+};
 
 export default Skills;

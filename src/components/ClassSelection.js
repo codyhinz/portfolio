@@ -1,4 +1,5 @@
 import React from 'react';
+import { useScrollAnimation } from '../hooks/useScrollAnimation';
 import { classes } from '../constants/classData';
 import warriorBg from '../assets/warriororderhall.png';
 import deathknightBg from '../assets/deathknightorderhall.jpg';
@@ -61,60 +62,69 @@ const classColors = {
   druid: '#FF7C0A',
 };
 
-export const ClassSelection = ({ selectedClass, setSelectedClass }) => (
-  <div id="class-selection" className="relative mb-12 rounded-lg border-2 border-wow-border group scroll-mt-24">
-    <div 
-      className="absolute inset-0 -z-10 transition-opacity duration-500"
-      style={{
-        backgroundImage: `url(${classBackgrounds[selectedClass]})`,
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-      }}
-    >
-      <div className="absolute inset-0 bg-black/85 group-hover:bg-black/80 transition-colors duration-300" />
-    </div>
+export const ClassSelection = ({ selectedClass, setSelectedClass }) => {
+  const [classRef, isVisible] = useScrollAnimation(0.1);
 
-    <div className="p-8">
-      <h2 className="text-3xl font-bold text-wow-gold mb-6">Development Specializations</h2>
-      <div className="flex flex-wrap justify-center gap-4 mb-8">
-        {Object.entries(classes).map(([key, value]) => (
-          <button
-            key={key}
-            onClick={() => setSelectedClass(key)}
-            style={{
-              borderColor: selectedClass === key ? classColors[key] : undefined,
-              backgroundColor: selectedClass === key ? `${classColors[key]}20` : undefined
-            }}
-            className={`px-6 py-4 rounded-lg transition-all duration-300 transform hover:scale-105 border-2 hover:border-opacity-100`}
-          >
-            <img 
-              src={classIcons[key]} 
-              alt={`${key} icon`} 
-              className="w-11 h-11 inline-block mr-2"
-            />
-            <span style={{ color: classColors[key] }}>
-              {key === 'deathknight' ? 'Death Knight' : key.charAt(0).toUpperCase() + key.slice(1)}
-            </span>
-          </button>
-        ))}
+  return (
+    <div ref={classRef} id="class-selection" className="relative mb-12 rounded-lg border-2 border-wow-border group scroll-mt-24">
+      <div 
+        className="absolute inset-0 -z-10 transition-opacity duration-500"
+        style={{
+          backgroundImage: `url(${classBackgrounds[selectedClass]})`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+        }}
+      >
+        <div className="absolute inset-0 bg-black/85 group-hover:bg-black/80 transition-colors duration-300" />
       </div>
-      <ClassDetails 
-        class={classes[selectedClass]} 
-        classIcon={classIcons[selectedClass]}
-        abilityIcons={abilityIcons[selectedClass]}
-        classColor={classColors[selectedClass]}
-      />
-    </div>
-  </div>
-);
 
-const ClassDetails = ({ class: selectedClass, classIcon, abilityIcons, classColor }) => (
-  <div className="bg-black/20 p-6 rounded-lg border border-wow-border space-y-4">
+      <div className="p-8">
+        <h2 className={`text-3xl font-bold text-wow-gold mb-6 animate-slide-right ${isVisible ? 'slide-right-end' : 'slide-right-start'}`}>
+          Development Specializations
+        </h2>
+        <div className="flex flex-wrap justify-center gap-4 mb-8">
+          {Object.entries(classes).map(([key, value], index) => (
+            <button
+              key={key}
+              onClick={() => setSelectedClass(key)}
+              style={{
+                borderColor: selectedClass === key ? classColors[key] : undefined,
+                backgroundColor: selectedClass === key ? `${classColors[key]}20` : undefined
+              }}
+              className={`px-6 py-4 rounded-lg transition-all duration-300 transform hover:scale-105 border-2 hover:border-opacity-100
+                animate-scale stagger-${index + 1} ${isVisible ? 'scale-end' : 'scale-start'}`}
+            >
+              <img 
+                src={classIcons[key]} 
+                alt={`${key} icon`} 
+                className={`w-11 h-11 inline-block mr-2 animate-float`}
+              />
+              <span style={{ color: classColors[key] }}>
+                {key === 'deathknight' ? 'Death Knight' : key.charAt(0).toUpperCase() + key.slice(1)}
+              </span>
+            </button>
+          ))}
+        </div>
+        <ClassDetails 
+          class={classes[selectedClass]} 
+          classIcon={classIcons[selectedClass]}
+          abilityIcons={abilityIcons[selectedClass]}
+          classColor={classColors[selectedClass]}
+          isVisible={isVisible}
+        />
+      </div>
+    </div>
+  );
+};
+
+const ClassDetails = ({ class: selectedClass, classIcon, abilityIcons, classColor, isVisible }) => (
+  <div className={`bg-black/20 p-6 rounded-lg border border-wow-border space-y-4 
+    animate-fade ${isVisible ? 'fade-end' : 'fade-start'}`}>
     <div className="flex items-center gap-4">
       <img 
         src={classIcon} 
         alt={`${selectedClass.title} icon`} 
-        className="w-12 h-12"
+        className="w-12 h-12 animate-float"
       />
       <h3 className="text-xl font-bold" style={{ color: classColor }}>{selectedClass.title}</h3>
     </div>
@@ -129,14 +139,15 @@ const ClassDetails = ({ class: selectedClass, classIcon, abilityIcons, classColo
           return (
             <div
               key={index}
-              className="p-3 bg-black/30 rounded border border-wow-border hover:border-opacity-100 transition-colors duration-300"
+              className={`p-3 bg-black/30 rounded border border-wow-border hover:border-opacity-100 transition-colors duration-300
+                animate-slide-right stagger-${index + 1} ${isVisible ? 'slide-right-end' : 'slide-right-start'}`}
               style={{ borderColor: `${classColor}40` }}
             >
               <div className="flex items-center gap-2">
                 <img 
                   src={abilityIcons[abilityName]} 
                   alt={abilityName}
-                  className="w-8 h-8"
+                  className="w-8 h-8 animate-float"
                 />
                 <div>
                   <span style={{ color: classColor }} className="font-semibold">{abilityName}:</span>

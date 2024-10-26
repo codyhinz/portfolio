@@ -1,4 +1,6 @@
+// ParsePerformance.js
 import React, { useState, useEffect } from 'react';
+import { useScrollAnimation } from '../hooks/useScrollAnimation';
 import { parsePerformances } from '../constants/parseData';
 import { ChevronDown, ChevronUp, HelpCircle } from 'lucide-react';
 import parseBg from '../assets/icc.jpg';
@@ -6,6 +8,7 @@ import parseBg from '../assets/icc.jpg';
 export const ParsePerformance = () => {
   const [isExpanded, setIsExpanded] = useState(false);
   const [showTooltip, setShowTooltip] = useState(false);
+  const [parseRef, isVisible] = useScrollAnimation(0.1);
   
   useEffect(() => {
     const handleHashChange = () => {
@@ -40,7 +43,8 @@ export const ParsePerformance = () => {
   };
 
   return (
-    <section id="parse-performance" className="relative mb-12 rounded-lg border-2 border-wow-border group scroll-mt-24">
+    <section ref={parseRef} id="parse-performance" className={`relative mb-12 rounded-lg border-2 border-wow-border group scroll-mt-24 
+      animate-fade ${isVisible ? 'fade-end' : 'fade-start'}`}>
       <div 
         className="absolute inset-0 -z-10"
         style={{
@@ -69,7 +73,7 @@ export const ParsePerformance = () => {
               <div className={`
                 absolute left-1/2 bottom-full mb-2 w-[28rem] transform -translate-x-1/2
                 bg-black/95 border border-wow-gold rounded-lg p-4 z-50
-                transition-all duration-300
+                transition-opacity duration-300
                 ${showTooltip ? 'opacity-100 visible' : 'opacity-0 invisible'}
               `}>
                 <div className="absolute left-1/2 bottom-0 transform -translate-x-1/2 translate-y-full">
@@ -79,33 +83,32 @@ export const ParsePerformance = () => {
                 <div className="space-y-2 text-sm">
                   <div>
                     <p className="text-wow-gold font-bold">What is Parsing in World of Warcraft?</p>
-                    <p className="text-white">Parsing is a performance metric that compares your combat effectiveness against all other players of your class and specialization. Your parse percentile indicates how you rank against others - a 95th percentile means you performed better than 95% of players.</p>
+                    <p className="text-white">Parsing is a performance metric that compares your combat effectiveness against all other players of your class and specialization.</p>
                   </div>
 
                   <div className="w-full h-px bg-gradient-to-r from-transparent via-wow-gold to-transparent my-3" />
                   
                   <div>
-                    <p className="text-wow-gold font-bold">Understanding iLvl (Item Level) Parsing</p>
-                    <p className="text-white">Item Level parsing compares your performance only against players with similar gear levels. While regular parsing shows how you rank against everyone, iLvl parsing demonstrates your skill independent of gear advantages - proving you can maximize performance with the tools at hand.</p>
+                    <p className="text-wow-gold font-bold">Understanding iLvl Parsing</p>
+                    <p className="text-white">Item Level parsing compares your performance only against players with similar gear levels.</p>
                   </div>
 
                   <div className="w-full h-px bg-gradient-to-r from-transparent via-wow-gold to-transparent my-3" />
 
                   <div>
                     <p className="text-wow-gold font-bold">How This Translates to Development</p>
-                    <p className="text-white">Just as I consistently achieve high parse rankings in WoW across both metrics, I bring the same dedication to software development. My ability to perform exceptionally well regardless of circumstances demonstrates my:</p>
                     <ul className="mt-1 space-y-1">
                       <li className="flex items-center gap-2">
                         <span className="text-wow-gold">⚔️</span>
-                        <span className="text-white">Adaptability with different technologies and constraints</span>
+                        <span className="text-white">Adaptability with different technologies</span>
                       </li>
                       <li className="flex items-center gap-2">
                         <span className="text-wow-gold">⚔️</span>
-                        <span className="text-white">Ability to optimize code and maximize efficiency</span>
+                        <span className="text-white">Ability to optimize code</span>
                       </li>
                       <li className="flex items-center gap-2">
                         <span className="text-wow-gold">⚔️</span>
-                        <span className="text-white">Commitment to excellence regardless of project scope</span>
+                        <span className="text-white">Commitment to excellence</span>
                       </li>
                     </ul>
                   </div>
@@ -170,59 +173,29 @@ export const ParsePerformance = () => {
               </div>
 
               <div className="space-y-3">
-                <div className="bg-black/20 p-3 rounded border border-wow-border">
-                  <div className="flex justify-between items-center mb-1">
-                    <span className="text-sm" style={{ color: char.classColor }}>Overall Parse</span>
-                    <span className={`font-bold ${getParseTextColor(char.overallParse)}`}>
-                      {char.overallParse}
-                    </span>
+                {[
+                  { label: 'Overall Parse', value: char.overallParse },
+                  { label: 'Best Parse', value: char.bestParse },
+                  { label: 'iLvl Parse', value: char.ilvlParse }
+                ].map((parse) => (
+                  <div key={parse.label} className="bg-black/20 p-3 rounded border border-wow-border">
+                    <div className="flex justify-between items-center mb-1">
+                      <span className="text-sm" style={{ color: char.classColor }}>{parse.label}</span>
+                      <span className={`font-bold ${getParseTextColor(parse.value)}`}>
+                        {parse.value}
+                      </span>
+                    </div>
+                    <div className="w-full bg-black/40 rounded-full h-2">
+                      <div
+                        className="h-2 rounded-full transition-all duration-1000"
+                        style={{
+                          width: `${parse.value}%`,
+                          backgroundColor: getParseColor(parse.value)
+                        }}
+                      />
+                    </div>
                   </div>
-                  <div className="w-full bg-black/40 rounded-full h-2">
-                    <div
-                      className="h-2 rounded-full transition-all duration-500"
-                      style={{
-                        width: `${char.overallParse}%`,
-                        backgroundColor: getParseColor(char.overallParse)
-                      }}
-                    />
-                  </div>
-                </div>
-
-                <div className="bg-black/20 p-3 rounded border border-wow-border">
-                  <div className="flex justify-between items-center mb-1">
-                    <span className="text-sm" style={{ color: char.classColor }}>Best Parse</span>
-                    <span className={`font-bold ${getParseTextColor(char.bestParse)}`}>
-                      {char.bestParse}
-                    </span>
-                  </div>
-                  <div className="w-full bg-black/40 rounded-full h-2">
-                    <div
-                      className="h-2 rounded-full transition-all duration-500"
-                      style={{
-                        width: `${char.bestParse}%`,
-                        backgroundColor: getParseColor(char.bestParse)
-                      }}
-                    />
-                  </div>
-                </div>
-
-                <div className="bg-black/20 p-3 rounded border border-wow-border">
-                  <div className="flex justify-between items-center mb-1">
-                    <span className="text-sm" style={{ color: char.classColor }}>iLvl Parse</span>
-                    <span className={`font-bold ${getParseTextColor(char.ilvlParse)}`}>
-                      {char.ilvlParse}
-                    </span>
-                  </div>
-                  <div className="w-full bg-black/40 rounded-full h-2">
-                    <div
-                      className="h-2 rounded-full transition-all duration-500"
-                      style={{
-                        width: `${char.ilvlParse}%`,
-                        backgroundColor: getParseColor(char.ilvlParse)
-                      }}
-                    />
-                  </div>
-                </div>
+                ))}
               </div>
 
               <div className="mt-4 pt-4 border-t border-wow-border">
@@ -231,8 +204,6 @@ export const ParsePerformance = () => {
                   <span className="text-sm" style={{ color: char.classColor }}>{char.kills} Kills</span>
                 </div>
               </div>
-
-              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-wow-gold/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
             </div>
           ))}
         </div>

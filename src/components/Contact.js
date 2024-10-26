@@ -1,4 +1,6 @@
+// Contact.js (continued)
 import React, { useState } from 'react';
+import { useScrollAnimation } from '../hooks/useScrollAnimation';
 import { Mail, MapPin, Phone, Check, Copy, ExternalLink } from 'lucide-react';
 import contactBg from '../assets/shattrath.jpg';
 
@@ -6,6 +8,7 @@ export const Contact = () => {
   const [showToast, setShowToast] = useState(false);
   const [toastMessage, setToastMessage] = useState('');
   const [activeDropdown, setActiveDropdown] = useState(null);
+  const [contactRef, isVisible] = useScrollAnimation(0.1);
   
   const handleCopy = async (text, type) => {
     try {
@@ -27,8 +30,7 @@ export const Contact = () => {
   };
 
   return (
-    <section id="contact" className="relative rounded-lg border-2 border-wow-border group scroll-mt-24 mb-6">
-      {/* Background Image Container */}
+    <section ref={contactRef} id="contact" className="relative rounded-lg border-2 border-wow-border group scroll-mt-24 mb-6">
       <div 
         className="absolute inset-0 -z-10"
         style={{
@@ -37,23 +39,28 @@ export const Contact = () => {
           backgroundPosition: 'center',
         }}
       >
-        {/* Overlay */}
         <div className="absolute inset-0 bg-gradient-to-b from-black/90 to-black/85 group-hover:from-black/85 group-hover:to-black/80 transition-colors duration-300" />
       </div>
 
       <div className="p-8 relative">
         {showToast && (
-          <div className="absolute top-4 right-4 bg-wow-gold/20 border border-wow-gold text-wow-gold px-4 py-2 rounded-lg flex items-center gap-2 animate-fade-in z-50">
+          <div className={`absolute top-4 right-4 bg-wow-gold/20 border border-wow-gold text-wow-gold 
+            px-4 py-2 rounded-lg flex items-center gap-2 z-50 animate-slide-up ${showToast ? 'slide-up-end' : 'slide-up-start'}`}>
             <Check className="w-4 h-4" />
             <span>{toastMessage}</span>
           </div>
         )}
         
-        <h2 className="text-3xl font-bold text-wow-gold mb-6">Contact Details</h2>
+        <h2 className={`text-3xl font-bold text-wow-gold mb-6 animate-slide-right ${isVisible ? 'slide-right-end' : 'slide-right-start'}`}>
+          Contact Details
+        </h2>
+        
         <div className="grid gap-6 md:grid-cols-3">
-          <div className="relative">
+          {/* Email */}
+          <div className={`relative animate-slide-up stagger-1 ${isVisible ? 'slide-up-end' : 'slide-up-start'}`}>
             {activeDropdown === 'email' && (
-              <div className="absolute bottom-full left-0 w-full mb-2 bg-black/90 border border-wow-gold rounded-lg overflow-hidden">
+              <div className={`absolute bottom-full left-0 w-full mb-2 bg-black/90 border border-wow-gold 
+                rounded-lg overflow-hidden animate-slide-up ${activeDropdown === 'email' ? 'slide-up-end' : 'slide-up-start'}`}>
                 <a
                   href="mailto:codyhinz@gmail.com"
                   className="flex items-center gap-2 p-3 hover:bg-wow-gold/20 transition-colors w-full text-left text-white"
@@ -76,21 +83,28 @@ export const Contact = () => {
             )}
             <button
               onClick={() => toggleDropdown('email')}
-              className="w-full flex items-center justify-center gap-2 p-4 rounded-lg bg-gradient-to-b from-wow-gold/20 to-transparent border border-wow-border hover:border-wow-gold transition-all duration-300 group/button"
+              className="w-full flex items-center justify-center gap-2 p-4 rounded-lg bg-gradient-to-b from-wow-gold/20 
+                to-transparent border border-wow-border hover:border-wow-gold transition-all duration-300 group/button "
             >
               <Mail className="w-5 h-5 text-wow-gold group-hover/button:scale-110 transition-transform duration-300" />
               <span className="text-white">codyhinz@gmail.com</span>
             </button>
           </div>
 
-          <div className="flex items-center justify-center gap-2 p-4 rounded-lg bg-gradient-to-b from-wow-gold/20 to-transparent border border-wow-border">
-            <MapPin className="w-5 h-5 text-wow-gold" />
-            <span className="text-white">Nicholasville, KY 40356</span>
+          {/* Address */}
+          <div className={`animate-slide-up stagger-2 ${isVisible ? 'slide-up-end' : 'slide-up-start'}`}>
+            <div className="flex items-center justify-center gap-2 p-4 rounded-lg bg-gradient-to-b from-wow-gold/20 
+              to-transparent border border-wow-border ">
+              <MapPin className="w-5 h-5 text-wow-gold animate-float" />
+              <span className="text-white">Nicholasville, KY 40356</span>
+            </div>
           </div>
 
-          <div className="relative">
+          {/* Phone */}
+          <div className={`relative animate-slide-up stagger-3 ${isVisible ? 'slide-up-end' : 'slide-up-start'}`}>
             {activeDropdown === 'phone' && (
-              <div className="absolute bottom-full left-0 w-full mb-2 bg-black/90 border border-wow-gold rounded-lg overflow-hidden">
+              <div className={`absolute bottom-full left-0 w-full mb-2 bg-black/90 border border-wow-gold 
+                rounded-lg overflow-hidden animate-slide-up ${activeDropdown === 'phone' ? 'slide-up-end' : 'slide-up-start'}`}>
                 <a
                   href="tel:859-396-5590"
                   className="flex items-center gap-2 p-3 hover:bg-wow-gold/20 transition-colors w-full text-left text-white"
@@ -113,7 +127,8 @@ export const Contact = () => {
             )}
             <button
               onClick={() => toggleDropdown('phone')}
-              className="w-full flex items-center justify-center gap-2 p-4 rounded-lg bg-gradient-to-b from-wow-gold/20 to-transparent border border-wow-border hover:border-wow-gold transition-all duration-300 group/button"
+              className="w-full flex items-center justify-center gap-2 p-4 rounded-lg bg-gradient-to-b from-wow-gold/20 
+                to-transparent border border-wow-border hover:border-wow-gold transition-all duration-300 group/button "
             >
               <Phone className="w-5 h-5 text-wow-gold group-hover/button:scale-110 transition-transform duration-300" />
               <span className="text-white">859-396-5590</span>

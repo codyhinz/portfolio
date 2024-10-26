@@ -1,11 +1,12 @@
 {
   "files": {
-    "main.css": "/portfolio/static/css/main.eee2c8cb.css",
-    "main.js": "/portfolio/static/js/main.2c5287aa.js",
+    "main.css": "/portfolio/static/css/main.6e8ab96b.css",
+    "main.js": "/portfolio/static/js/main.414fabcd.js",
     "static/js/453.1407b060.chunk.js": "/portfolio/static/js/453.1407b060.chunk.js",
     "static/media/stormwindwarroom.png": "/portfolio/static/media/stormwindwarroom.442f5fa4843dc5ad94f2.png",
     "static/media/pfp.png": "/portfolio/static/media/pfp.ff2890da2bb7d789e42c.png",
     "static/media/karalibrary.jpg": "/portfolio/static/media/karalibrary.02bce88cc5bd81c0db87.jpg",
+    "static/media/orgrimmararena.jpg": "/portfolio/static/media/orgrimmararena.13c35b41dbaa7b666657.jpg",
     "static/media/druidorderhall.jpg": "/portfolio/static/media/druidorderhall.5ece6635acba0b90afaf.jpg",
     "static/media/warriororderhall.png": "/portfolio/static/media/warriororderhall.22c0c3f4b8d72b2f39c7.png",
     "static/media/deathknightorderhall.jpg": "/portfolio/static/media/deathknightorderhall.32f75817315e850f864e.jpg",
@@ -35,12 +36,12 @@
     "static/media/arms.png": "/portfolio/static/media/arms.4b4772f70284f62d37d2.png",
     "static/media/souldan.png": "/portfolio/static/media/souldan.e881a55222e476ad478d.png",
     "index.html": "/portfolio/index.html",
-    "main.eee2c8cb.css.map": "/portfolio/static/css/main.eee2c8cb.css.map",
-    "main.2c5287aa.js.map": "/portfolio/static/js/main.2c5287aa.js.map",
+    "main.6e8ab96b.css.map": "/portfolio/static/css/main.6e8ab96b.css.map",
+    "main.414fabcd.js.map": "/portfolio/static/js/main.414fabcd.js.map",
     "453.1407b060.chunk.js.map": "/portfolio/static/js/453.1407b060.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.eee2c8cb.css",
-    "static/js/main.2c5287aa.js"
+    "static/css/main.6e8ab96b.css",
+    "static/js/main.414fabcd.js"
   ]
 }

@@ -7,6 +7,21 @@ import warriorIcon from '../assets/warrior.png';
 import deathknightIcon from '../assets/deathknight.png';
 import druidIcon from '../assets/druid.png';
 
+import mortalStrikeIcon from '../assets/arms.png';
+import tacticalMasteryIcon from '../assets/tacticalmastery.png';
+import battleShoutIcon from '../assets/battleshout.png';
+import victoryRushIcon from '../assets/victoryrush.png';
+
+import obliterateIcon from '../assets/obliterate.png';
+import deathGripIcon from '../assets/deathgrip.png';
+import pillarOfFrostIcon from '../assets/pillaroffrost.png';
+import runicPowerIcon from '../assets/empoweredruneweapon.png';
+
+import rakeIcon from '../assets/rake.png';
+import ripIcon from '../assets/rip.png';
+import savageRoarIcon from '../assets/savageroar.png';
+import berserkIcon from '../assets/berserk.png';
+
 const classBackgrounds = {
   warrior: warriorBg,
   deathknight: deathknightBg,
@@ -17,6 +32,33 @@ const classIcons = {
   warrior: warriorIcon,
   deathknight: deathknightIcon,
   druid: druidIcon,
+};
+
+const abilityIcons = {
+  warrior: {
+    'Mortal Strike': mortalStrikeIcon,
+    'Tactical Mastery': tacticalMasteryIcon,
+    'Battle Shout': battleShoutIcon,
+    'Victory Rush': victoryRushIcon,
+  },
+  deathknight: {
+    'Obliterate': obliterateIcon,
+    'Death Grip': deathGripIcon,
+    'Pillar of Frost': pillarOfFrostIcon,
+    'Runic Power': runicPowerIcon,
+  },
+  druid: {
+    'Rake': rakeIcon,
+    'Rip': ripIcon,
+    'Savage Roar': savageRoarIcon,
+    'Berserk': berserkIcon,
+  },
+};
+
+const classColors = {
+  warrior: '#C79C6E',
+  deathknight: '#C41E3A',
+  druid: '#FF7C0A',
 };
 
 export const ClassSelection = ({ selectedClass, setSelectedClass }) => (
@@ -39,29 +81,34 @@ export const ClassSelection = ({ selectedClass, setSelectedClass }) => (
           <button
             key={key}
             onClick={() => setSelectedClass(key)}
-            className={`px-6 py-4 rounded-lg transition-all duration-300 transform hover:scale-105 ${
-              selectedClass === key 
-                ? 'bg-gradient-to-b from-wow-gold/20 to-wow-bg border-2 border-wow-gold' 
-                : 'bg-black/30 border-2 border-wow-border hover:border-wow-gold'
-            }`}
+            style={{
+              borderColor: selectedClass === key ? classColors[key] : undefined,
+              backgroundColor: selectedClass === key ? `${classColors[key]}20` : undefined
+            }}
+            className={`px-6 py-4 rounded-lg transition-all duration-300 transform hover:scale-105 border-2 hover:border-opacity-100`}
           >
             <img 
               src={classIcons[key]} 
               alt={`${key} icon`} 
               className="w-11 h-11 inline-block mr-2"
             />
-            <span className="text-wow-gold">
+            <span style={{ color: classColors[key] }}>
               {key === 'deathknight' ? 'Death Knight' : key.charAt(0).toUpperCase() + key.slice(1)}
             </span>
           </button>
         ))}
       </div>
-      <ClassDetails class={classes[selectedClass]} classIcon={classIcons[selectedClass]} />
+      <ClassDetails 
+        class={classes[selectedClass]} 
+        classIcon={classIcons[selectedClass]}
+        abilityIcons={abilityIcons[selectedClass]}
+        classColor={classColors[selectedClass]}
+      />
     </div>
   </div>
 );
 
-const ClassDetails = ({ class: selectedClass, classIcon }) => (
+const ClassDetails = ({ class: selectedClass, classIcon, abilityIcons, classColor }) => (
   <div className="bg-black/20 p-6 rounded-lg border border-wow-border space-y-4">
     <div className="flex items-center gap-4">
       <img 
@@ -69,20 +116,36 @@ const ClassDetails = ({ class: selectedClass, classIcon }) => (
         alt={`${selectedClass.title} icon`} 
         className="w-12 h-12"
       />
-      <h3 className="text-xl font-bold text-wow-gold">{selectedClass.title}</h3>
+      <h3 className="text-xl font-bold" style={{ color: classColor }}>{selectedClass.title}</h3>
     </div>
     <p className="text-white">{selectedClass.description}</p>
     <div className="mt-4">
-      <h4 className="text-wow-gold mb-2">Core Abilities:</h4>
+      <h4 style={{ color: classColor }} className="mb-2">Core Abilities:</h4>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        {selectedClass.abilities.map((ability, index) => (
-          <div
-            key={index}
-            className="p-2 bg-black/30 rounded border border-wow-border hover:border-wow-gold transition-colors duration-300 text-wow-gold"
-          >
-            {ability}
-          </div>
-        ))}
+        {selectedClass.abilities.map((ability, index) => {
+          const abilityName = ability.split(':')[0];
+          const abilityDescription = ability.split(':')[1];
+          
+          return (
+            <div
+              key={index}
+              className="p-3 bg-black/30 rounded border border-wow-border hover:border-opacity-100 transition-colors duration-300"
+              style={{ borderColor: `${classColor}40` }}
+            >
+              <div className="flex items-center gap-2">
+                <img 
+                  src={abilityIcons[abilityName]} 
+                  alt={abilityName}
+                  className="w-8 h-8"
+                />
+                <div>
+                  <span style={{ color: classColor }} className="font-semibold">{abilityName}:</span>
+                  <span className="text-white ml-2">{abilityDescription}</span>
+                </div>
+              </div>
+            </div>
+          );
+        })}
       </div>
     </div>
   </div>

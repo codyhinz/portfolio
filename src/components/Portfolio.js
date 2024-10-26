@@ -10,6 +10,7 @@ import { ParsePerformance } from './ParsePerformance';
 import { Skills } from './Skills';
 
 import backgroundImage from '../assets/bt.png';
+import Projects from './Projects';
 
 const Portfolio = () => {
   const [selectedClass, setSelectedClass] = useState('warrior');
@@ -46,13 +47,14 @@ const Portfolio = () => {
       <div className="relative z-10 min-h-screen px-4 sm:px-6 md:px-8 pt-12 sm:pt-16">
         <Header />
         <Achievements achievements={achievements} />
+        <Skills />
         <Education />
         <Experience />
+        <Projects />
         <ClassSelection 
           selectedClass={selectedClass}
           setSelectedClass={setSelectedClass}
         />
-        <Skills />
         <ParsePerformance />
         <Contact />
       </div>

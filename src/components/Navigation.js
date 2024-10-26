@@ -18,6 +18,7 @@ export const Navigation = () => {
     { label: 'About', href: '#header' },
     { label: 'Achievements', href: '#achievements' },
     { label: 'Education', href: '#education' },
+    { label: 'Projects', href: '#projects' },
     { label: 'Experience', href: '#experience' },
     { label: 'Class Selection', href: '#class-selection' },
     { label: 'Skills', href: '#skills' },

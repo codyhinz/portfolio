@@ -1,4 +1,3 @@
-// ParsePerformance.js
 import React, { useState, useEffect } from 'react';
 import { useScrollAnimation } from '../hooks/useScrollAnimation';
 import { parsePerformances } from '../constants/parseData';
@@ -43,8 +42,11 @@ export const ParsePerformance = () => {
   };
 
   return (
-    <section ref={parseRef} id="parse-performance" className={`relative mb-12 rounded-lg border-2 border-wow-border group scroll-mt-24 
-      animate-fade ${isVisible ? 'fade-end' : 'fade-start'}`}>
+    <section 
+      ref={parseRef} 
+      id="parse-performance" 
+      className={`relative mb-12 rounded-lg border-2 border-wow-border group scroll-mt-24 animate-fade ${isVisible ? 'fade-end' : 'fade-start'}`}
+    >
       <div 
         className="absolute inset-0 -z-10"
         style={{
@@ -56,10 +58,12 @@ export const ParsePerformance = () => {
         <div className="absolute inset-0 bg-black/85 group-hover:bg-black/80 transition-colors duration-300" />
       </div>
 
-      <div className="p-8">
+      <div className="p-4 md:p-8">
         <div className="flex justify-between items-center mb-6">
           <div className="flex items-center gap-2 relative">
-            <h2 className="text-3xl font-bold text-wow-gold">Parse Performance</h2>
+            <h2 className={`text-2xl md:text-3xl font-bold text-wow-gold animate-slide-right ${isVisible ? 'slide-right-end' : 'slide-right-start'}`}>
+              Parse Performance
+            </h2>
             <div 
               className="relative"
               onMouseEnter={() => setShowTooltip(true)}
@@ -71,7 +75,7 @@ export const ParsePerformance = () => {
               />
               
               <div className={`
-                absolute left-1/2 bottom-full mb-2 w-[28rem] transform -translate-x-1/2
+                absolute left-1/2 bottom-full mb-2 w-[16rem] md:w-[28rem] transform -translate-x-1/2
                 bg-black/95 border border-wow-gold rounded-lg p-4 z-50
                 transition-opacity duration-300
                 ${showTooltip ? 'opacity-100 visible' : 'opacity-0 invisible'}
@@ -125,69 +129,79 @@ export const ParsePerformance = () => {
           </button>
         </div>
 
-        <div className={`grid grid-cols-1 md:grid-cols-3 gap-6 transition-all duration-500 ${
-          isExpanded ? 'opacity-100 max-h-[2000px]' : 'opacity-0 max-h-0 overflow-hidden'
-        }`}>
-          {parsePerformances.map((char) => (
+        <div className={`grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 transition-all duration-500 overflow-hidden
+          ${isExpanded ? 'max-h-[5000px] opacity-100' : 'max-h-0 opacity-0'}`}
+        >
+          {parsePerformances.map((char, index) => (
             <div
               key={char.id}
-              className="bg-black/30 rounded-lg p-6 border-2 border-wow-border hover:border-wow-gold transition-colors duration-300 relative group"
+              className={`bg-black/30 rounded-lg p-4 md:p-6 border-2 border-wow-border hover:border-wow-gold 
+                transition-colors duration-300 relative group animate-scale stagger-${index + 1} mt-6 
+                ${isVisible ? 'scale-end' : 'scale-start'}`}
             >
-              <div className="absolute -top-3 -right-3 w-12 h-12 rounded-full bg-black/80 border-2 border-wow-gold flex items-center justify-center">
+              {/* Spec Icon - Positioned above the card */}
+              <div className="absolute -top-6 -right-3 w-12 h-12 rounded-full bg-black/80 border-2 border-wow-gold 
+                flex items-center justify-center z-10 overflow-visible">
                 <img
                   src={char.specIcon}
                   alt={`${char.spec} icon`}
-                  className="w-8 h-8"
+                  className="w-8 h-8 object-contain"
                 />
               </div>
 
-              <div className="flex items-start gap-4 mb-4">
-                <div className="relative">
+              <div className={`flex items-start gap-2 md:gap-4 mb-4 animate-slide-right stagger-${index + 1} 
+                ${isVisible ? 'slide-right-end' : 'slide-right-start'}`}>
+                <div className="relative shrink-0">
                   <img
                     src={char.profilePicture}
                     alt={char.characterName}
-                    className="w-16 h-16 rounded-lg border-2 object-cover"
+                    className="w-12 h-12 md:w-16 md:h-16 rounded-lg border-2 object-cover"
                     style={{ borderColor: char.classColor }}
                   />
                 </div>
                 
-                <div>
+                <div className="min-w-0">
                   <div className="flex items-center gap-2">
                     <h3 
-                      className="text-xl font-bold" 
+                      className="text-lg md:text-xl font-bold truncate" 
                       style={{ color: char.classColor }}
                     >
                       {char.characterName}
                     </h3>
-                    <span style={{ color: char.classColor }}>
+                    <span style={{ color: char.classColor }} className="shrink-0">
                       {char.level}
                     </span>
                   </div>
-                  <p style={{ color: char.classColor }} className="text-sm">
+                  <p style={{ color: char.classColor }} className="text-xs md:text-sm truncate">
                     {char.spec} {char.class}
                   </p>
-                  <p className="text-wow-gold text-sm">
+                  <p className="text-wow-gold text-xs md:text-sm truncate">
                     {char.realm}
                   </p>
                 </div>
               </div>
 
-              <div className="space-y-3">
+              <div className="space-y-2 md:space-y-3">
                 {[
                   { label: 'Overall Parse', value: char.overallParse },
                   { label: 'Best Parse', value: char.bestParse },
                   { label: 'iLvl Parse', value: char.ilvlParse }
-                ].map((parse) => (
-                  <div key={parse.label} className="bg-black/20 p-3 rounded border border-wow-border">
+                ].map((parse, parseIndex) => (
+                  <div 
+                    key={parse.label} 
+                    className={`bg-black/20 p-2 md:p-3 rounded border border-wow-border
+                      animate-slide-right stagger-${parseIndex + 1} 
+                      ${isVisible ? 'slide-right-end' : 'slide-right-start'}`}
+                  >
                     <div className="flex justify-between items-center mb-1">
-                      <span className="text-sm" style={{ color: char.classColor }}>{parse.label}</span>
-                      <span className={`font-bold ${getParseTextColor(parse.value)}`}>
+                      <span className="text-xs md:text-sm" style={{ color: char.classColor }}>{parse.label}</span>
+                      <span className={`font-bold text-xs md:text-sm ${getParseTextColor(parse.value)}`}>
                         {parse.value}
                       </span>
                     </div>
-                    <div className="w-full bg-black/40 rounded-full h-2">
+                    <div className="w-full bg-black/40 rounded-full h-1.5 md:h-2">
                       <div
-                        className="h-2 rounded-full transition-all duration-1000"
+                        className="h-full rounded-full transition-all duration-1000"
                         style={{
                           width: `${parse.value}%`,
                           backgroundColor: getParseColor(parse.value)
@@ -198,10 +212,11 @@ export const ParsePerformance = () => {
                 ))}
               </div>
 
-              <div className="mt-4 pt-4 border-t border-wow-border">
+              <div className={`mt-3 md:mt-4 pt-3 md:pt-4 border-t border-wow-border
+                animate-fade stagger-${index + 1} ${isVisible ? 'fade-end' : 'fade-start'}`}>
                 <div className="flex justify-between items-center">
-                  <span className="text-sm" style={{ color: char.classColor }}>{char.tierName}</span>
-                  <span className="text-sm" style={{ color: char.classColor }}>{char.kills} Kills</span>
+                  <span className="text-xs md:text-sm truncate" style={{ color: char.classColor }}>{char.tierName}</span>
+                  <span className="text-xs md:text-sm shrink-0" style={{ color: char.classColor }}>{char.kills} Kills</span>
                 </div>
               </div>
             </div>

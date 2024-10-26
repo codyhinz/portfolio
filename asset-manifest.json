@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/portfolio/static/css/main.e6071221.css",
-    "main.js": "/portfolio/static/js/main.4f9a0822.js",
+    "main.css": "/portfolio/static/css/main.eee2c8cb.css",
+    "main.js": "/portfolio/static/js/main.bc54c8b6.js",
     "static/js/453.1407b060.chunk.js": "/portfolio/static/js/453.1407b060.chunk.js",
     "static/media/stormwindwarroom.png": "/portfolio/static/media/stormwindwarroom.442f5fa4843dc5ad94f2.png",
     "static/media/pfp.png": "/portfolio/static/media/pfp.ff2890da2bb7d789e42c.png",
@@ -11,24 +11,36 @@
     "static/media/deathknightorderhall.jpg": "/portfolio/static/media/deathknightorderhall.32f75817315e850f864e.jpg",
     "static/media/bt.png": "/portfolio/static/media/bt.cab34bc744613b3e90e3.png",
     "static/media/pfp.jpg": "/portfolio/static/media/pfp.88a1b6e2ab725aae82ee.jpg",
+    "static/media/icc.jpg": "/portfolio/static/media/icc.7a901c67ab15c4eab928.jpg",
     "static/media/orgthroneroom.jpg": "/portfolio/static/media/orgthroneroom.28fccfca80871834e8a5.jpg",
     "static/media/shattrath.jpg": "/portfolio/static/media/shattrath.d418bbd4a630ad313b5f.jpg",
     "static/media/danzeld.png": "/portfolio/static/media/danzeld.28a256696ec49554da9e.png",
     "static/media/unholydan.png": "/portfolio/static/media/unholydan.7ed40ada8258231ac461.png",
+    "static/media/obliterate.png": "/portfolio/static/media/obliterate.2a24645fa62335cad772.png",
+    "static/media/deathgrip.png": "/portfolio/static/media/deathgrip.bb18ffbc0b0270bba596.png",
+    "static/media/savageroar.png": "/portfolio/static/media/savageroar.9ce39c894c70e09f976b.png",
+    "static/media/victoryrush.png": "/portfolio/static/media/victoryrush.81c06904b615ac9f0347.png",
+    "static/media/empoweredruneweapon.png": "/portfolio/static/media/empoweredruneweapon.e6c3a44299bf40cb8771.png",
+    "static/media/berserk.png": "/portfolio/static/media/berserk.080559c05cf20bc58c3e.png",
+    "static/media/battleshout.png": "/portfolio/static/media/battleshout.e3f526886c3a7ecb3ed8.png",
+    "static/media/pillaroffrost.png": "/portfolio/static/media/pillaroffrost.e28f771040d5793290f4.png",
+    "static/media/rake.png": "/portfolio/static/media/rake.b3c1ddd8c014d3b7760b.png",
+    "static/media/tacticalmastery.png": "/portfolio/static/media/tacticalmastery.e423a96b5881a11324ea.png",
     "static/media/deathknight.png": "/portfolio/static/media/deathknight.025baee802db42510cd8.png",
     "static/media/druid.png": "/portfolio/static/media/druid.58443769aa2af4543d58.png",
+    "static/media/rip.png": "/portfolio/static/media/rip.88d7c3ae99232f6cf68d.png",
     "static/media/warrior.png": "/portfolio/static/media/warrior.007035a210371b1cc5a7.png",
     "static/media/frost.png": "/portfolio/static/media/frost.f9e8e9a5cc72a809d4f0.png",
     "static/media/destruction.png": "/portfolio/static/media/destruction.1b2933d53ba0088b2edd.png",
     "static/media/arms.png": "/portfolio/static/media/arms.4b4772f70284f62d37d2.png",
     "static/media/souldan.png": "/portfolio/static/media/souldan.e881a55222e476ad478d.png",
     "index.html": "/portfolio/index.html",
-    "main.e6071221.css.map": "/portfolio/static/css/main.e6071221.css.map",
-    "main.4f9a0822.js.map": "/portfolio/static/js/main.4f9a0822.js.map",
+    "main.eee2c8cb.css.map": "/portfolio/static/css/main.eee2c8cb.css.map",
+    "main.bc54c8b6.js.map": "/portfolio/static/js/main.bc54c8b6.js.map",
     "453.1407b060.chunk.js.map": "/portfolio/static/js/453.1407b060.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.e6071221.css",
-    "static/js/main.4f9a0822.js"
+    "static/css/main.eee2c8cb.css",
+    "static/js/main.bc54c8b6.js"
   ]
 }

@@ -8,7 +8,7 @@ export const Experience = () => {
   const [experienceRef, isVisible] = useScrollAnimation(0.1);
 
   return (
-    <section ref={experienceRef} className="relative mb-12 rounded-lg border-2 border-wow-border group scroll-mt-24">
+    <section id="experience" ref={experienceRef} className="relative mb-12 rounded-lg border-2 border-wow-border group scroll-mt-24">
       <div 
         className="absolute inset-0 -z-10"
         style={{

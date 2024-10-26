@@ -7,7 +7,7 @@ export const Education = () => {
   const [educationRef, isVisible] = useScrollAnimation(0.1);
 
   return (
-    <section ref={educationRef} className={`relative mb-12 rounded-lg border-2 border-wow-border group scroll-mt-24 
+    <section id="education" ref={educationRef} className={`relative mb-12 rounded-lg border-2 border-wow-border group scroll-mt-24 
       animate-fade ${isVisible ? 'fade-end' : 'fade-start'}`}>
       <div 
         className="absolute inset-0 -z-10"

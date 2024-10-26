@@ -11,7 +11,7 @@ export const Achievements = ({ achievements }) => (
           <span className="text-4xl">{achievement.icon}</span>
           <div>
             <h3 className="text-wow-gold font-bold">{achievement.title}</h3>
-            <p className="text-wow-tan text-sm">{achievement.description}</p>
+            <p className="text-white text-sm">{achievement.description}</p>
           </div>
         </div>
       </div>

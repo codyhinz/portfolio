@@ -56,7 +56,7 @@ export const Contact = () => {
               <div className="absolute bottom-full left-0 w-full mb-2 bg-black/90 border border-wow-gold rounded-lg overflow-hidden">
                 <a
                   href="mailto:codyhinz@gmail.com"
-                  className="flex items-center gap-2 p-3 hover:bg-wow-gold/20 transition-colors w-full text-left text-wow-tan"
+                  className="flex items-center gap-2 p-3 hover:bg-wow-gold/20 transition-colors w-full text-left text-white"
                   onClick={() => setActiveDropdown(null)}
                 >
                   <ExternalLink className="w-4 h-4 text-wow-gold" />
@@ -67,7 +67,7 @@ export const Contact = () => {
                     handleCopy('codyhinz@gmail.com', 'Email');
                     setActiveDropdown(null);
                   }}
-                  className="flex items-center gap-2 p-3 hover:bg-wow-gold/20 transition-colors w-full text-left text-wow-tan"
+                  className="flex items-center gap-2 p-3 hover:bg-wow-gold/20 transition-colors w-full text-left text-white"
                 >
                   <Copy className="w-4 h-4 text-wow-gold" />
                   <span>Copy to Clipboard</span>
@@ -79,13 +79,13 @@ export const Contact = () => {
               className="w-full flex items-center justify-center gap-2 p-4 rounded-lg bg-gradient-to-b from-wow-gold/20 to-transparent border border-wow-border hover:border-wow-gold transition-all duration-300 group/button"
             >
               <Mail className="w-5 h-5 text-wow-gold group-hover/button:scale-110 transition-transform duration-300" />
-              <span className="text-wow-tan">codyhinz@gmail.com</span>
+              <span className="text-white">codyhinz@gmail.com</span>
             </button>
           </div>
 
           <div className="flex items-center justify-center gap-2 p-4 rounded-lg bg-gradient-to-b from-wow-gold/20 to-transparent border border-wow-border">
             <MapPin className="w-5 h-5 text-wow-gold" />
-            <span className="text-wow-tan">Nicholasville, KY 40356</span>
+            <span className="text-white">Nicholasville, KY 40356</span>
           </div>
 
           <div className="relative">
@@ -93,7 +93,7 @@ export const Contact = () => {
               <div className="absolute bottom-full left-0 w-full mb-2 bg-black/90 border border-wow-gold rounded-lg overflow-hidden">
                 <a
                   href="tel:859-396-5590"
-                  className="flex items-center gap-2 p-3 hover:bg-wow-gold/20 transition-colors w-full text-left text-wow-tan"
+                  className="flex items-center gap-2 p-3 hover:bg-wow-gold/20 transition-colors w-full text-left text-white"
                   onClick={() => setActiveDropdown(null)}
                 >
                   <ExternalLink className="w-4 h-4 text-wow-gold" />
@@ -104,7 +104,7 @@ export const Contact = () => {
                     handleCopy('859-396-5590', 'Phone number');
                     setActiveDropdown(null);
                   }}
-                  className="flex items-center gap-2 p-3 hover:bg-wow-gold/20 transition-colors w-full text-left text-wow-tan"
+                  className="flex items-center gap-2 p-3 hover:bg-wow-gold/20 transition-colors w-full text-left text-white"
                 >
                   <Copy className="w-4 h-4 text-wow-gold" />
                   <span>Copy to Clipboard</span>
@@ -116,7 +116,7 @@ export const Contact = () => {
               className="w-full flex items-center justify-center gap-2 p-4 rounded-lg bg-gradient-to-b from-wow-gold/20 to-transparent border border-wow-border hover:border-wow-gold transition-all duration-300 group/button"
             >
               <Phone className="w-5 h-5 text-wow-gold group-hover/button:scale-110 transition-transform duration-300" />
-              <span className="text-wow-tan">859-396-5590</span>
+              <span className="text-white">859-396-5590</span>
             </button>
           </div>
         </div>

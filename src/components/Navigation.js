@@ -34,7 +34,7 @@ export const Navigation = () => {
           <a
             key={item.href}
             href={item.href}
-            className="text-wow-tan hover:text-wow-gold transition-colors duration-300 hover:scale-105 transform text-sm whitespace-nowrap"
+            className="text-white hover:text-wow-gold transition-colors duration-300 hover:scale-105 transform text-sm whitespace-nowrap"
           >
             {item.label}
           </a>
@@ -45,7 +45,7 @@ export const Navigation = () => {
         <div className="flex items-center px-3">
           <button
             onClick={() => setIsOpen(!isOpen)}
-            className="p-2 text-wow-gold hover:text-wow-tan transition-colors duration-300"
+            className="p-2 text-wow-gold hover:text-white transition-colors duration-300"
             aria-label="Toggle menu"
           >
             {isOpen ? <X size={20} /> : <Menu size={20} />}
@@ -64,7 +64,7 @@ export const Navigation = () => {
                 key={item.href}
                 href={item.href}
                 onClick={() => setIsOpen(false)}
-                className="block px-6 py-2 text-wow-tan hover:text-wow-gold hover:bg-wow-gold/10 transition-colors duration-300 text-sm"
+                className="block px-6 py-2 text-white hover:text-wow-gold hover:bg-wow-gold/10 transition-colors duration-300 text-sm"
               >
                 {item.label}
               </a>

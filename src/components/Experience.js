@@ -30,7 +30,7 @@ export const Experience = () => (
               <div className="flex justify-between items-start">
                 <div>
                   <h3 className="text-xl font-bold text-wow-gold">{job.title}</h3>
-                  <p className="text-wow-tan">{job.company}</p>
+                  <p className="text-white">{job.company}</p>
                 </div>
                 <span className="text-wow-gold/80">{job.period}</span>
               </div>
@@ -39,7 +39,7 @@ export const Experience = () => (
                 <h4 className="text-wow-gold font-semibold">Key Achievements:</h4>
                 <ul className="space-y-2">
                   {job.achievements.map((achievement, index) => (
-                    <li key={index} className="flex items-start gap-2 text-wow-tan">
+                    <li key={index} className="flex items-start gap-2 text-white">
                       <span className="text-wow-gold mt-1">⚔️</span>
                       {achievement}
                     </li>

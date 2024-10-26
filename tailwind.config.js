@@ -7,7 +7,7 @@ module.exports = {
     extend: {
       colors: {
         'wow-gold': '#ffd100',
-        'wow-tan': '#c79c6e',
+        'white': '#fff',
         'wow-border': '#4a3a22',
         'wow-bg': '#1a1a1a',
       },

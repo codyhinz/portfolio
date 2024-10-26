@@ -56,9 +56,9 @@ const EducationCard = ({ icon, title, status, subtitle, points }) => (
       <span className="text-4xl">{icon}</span>
       <div>
         <h3 className="text-xl font-bold text-wow-gold mb-2">{title}</h3>
-        <p className="text-wow-tan">{status}</p>
+        <p className="text-white">{status}</p>
         <p className="text-wow-gold/80 text-sm mb-4">{subtitle}</p>
-        <div className="space-y-2 text-wow-tan">
+        <div className="space-y-2 text-white">
           {points.map((point, index) => (
             <p key={index} className="flex items-center gap-2">
               <span className="text-wow-gold">{index === 0 ? '📍' : index === 1 ? '🎯' : '🌟'}</span>

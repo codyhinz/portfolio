@@ -71,7 +71,7 @@ const ClassDetails = ({ class: selectedClass, classIcon }) => (
       />
       <h3 className="text-xl font-bold text-wow-gold">{selectedClass.title}</h3>
     </div>
-    <p className="text-wow-tan">{selectedClass.description}</p>
+    <p className="text-white">{selectedClass.description}</p>
     <div className="mt-4">
       <h4 className="text-wow-gold mb-2">Core Abilities:</h4>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">

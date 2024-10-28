@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/portfolio/static/css/main.f0fbdf7d.css",
-    "main.js": "/portfolio/static/js/main.745b5f34.js",
+    "main.js": "/portfolio/static/js/main.8bc47d7c.js",
     "static/js/453.1407b060.chunk.js": "/portfolio/static/js/453.1407b060.chunk.js",
     "static/media/stormwindwarroom.png": "/portfolio/static/media/stormwindwarroom.442f5fa4843dc5ad94f2.png",
     "static/media/pfp.png": "/portfolio/static/media/pfp.28745b46e26d439fba1d.png",
@@ -39,11 +39,11 @@
     "static/media/souldan.png": "/portfolio/static/media/souldan.e881a55222e476ad478d.png",
     "index.html": "/portfolio/index.html",
     "main.f0fbdf7d.css.map": "/portfolio/static/css/main.f0fbdf7d.css.map",
-    "main.745b5f34.js.map": "/portfolio/static/js/main.745b5f34.js.map",
+    "main.8bc47d7c.js.map": "/portfolio/static/js/main.8bc47d7c.js.map",
     "453.1407b060.chunk.js.map": "/portfolio/static/js/453.1407b060.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.f0fbdf7d.css",
-    "static/js/main.745b5f34.js"
+    "static/js/main.8bc47d7c.js"
   ]
 }

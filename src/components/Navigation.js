@@ -1,5 +1,17 @@
 import React, { useState, useEffect } from 'react';
-import { Menu, X } from 'lucide-react';
+import { 
+  Menu, 
+  X, 
+  User, 
+  Trophy, 
+  Swords, 
+  GraduationCap, 
+  Briefcase, 
+  Code2, 
+  Shield, 
+  BarChart2, 
+  Contact2 
+} from 'lucide-react';
 
 export const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -15,15 +27,15 @@ export const Navigation = () => {
   }, []);
 
   const navItems = [
-    { label: 'About', href: '#header' },
-    { label: 'Achievements', href: '#achievements' },
-    { label: 'Skills', href: '#skills' },
-    { label: 'Education', href: '#education' },
-    { label: 'Experience', href: '#experience' },
-    { label: 'Projects', href: '#projects' },
-    { label: 'Developer Abilities', href: '#class-selection' },
-    { label: 'Parse Performance', href: '#parse-performance' },
-    { label: 'Contact', href: '#contact' }
+    { label: 'About', href: '#header', icon: User },
+    { label: 'Achievements', href: '#achievements', icon: Trophy },
+    { label: 'Skills', href: '#skills', icon: Swords },
+    { label: 'Education', href: '#education', icon: GraduationCap },
+    { label: 'Experience', href: '#experience', icon: Briefcase },
+    { label: 'Projects', href: '#projects', icon: Code2 },
+    { label: 'Abilities', href: '#class-selection', icon: Shield },
+    { label: 'Parse Performance', href: '#parse-performance', icon: BarChart2 },
+    { label: 'Contact', href: '#contact', icon: Contact2 }
   ];
 
   return (
@@ -31,15 +43,23 @@ export const Navigation = () => {
       isScrolled || isOpen ? 'bg-wow-bg/95 backdrop-blur-sm' : 'bg-transparent'
     }`}>
       <div className="hidden lg:flex justify-center items-center h-12 px-4 gap-4 xl:gap-6 max-w-7xl mx-auto">
-        {navItems.map((item) => (
-          <a
-            key={item.href}
-            href={item.href}
-            className="text-white hover:text-wow-gold transition-colors duration-300 hover:scale-105 transform text-sm whitespace-nowrap"
-          >
-            {item.label}
-          </a>
-        ))}
+        {navItems.map((item) => {
+          const IconComponent = item.icon;
+          return (
+            <a
+              key={item.href}
+              href={item.href}
+              className="text-white hover:text-wow-gold transition-colors duration-300 hover:scale-105 transform text-sm whitespace-nowrap 
+                flex items-center gap-1.5 group"
+            >
+              <IconComponent 
+                size={16} 
+                className="group-hover:animate-float text-wow-gold/80 group-hover:text-wow-gold" 
+              />
+              {item.label}
+            </a>
+          );
+        })}
       </div>
 
       <div className="lg:hidden">
@@ -59,16 +79,24 @@ export const Navigation = () => {
           }`}
         >
           <div className="max-h-[calc(100vh-2.5rem)] overflow-y-auto">
-            {navItems.map((item) => (
-              <a
-                key={item.href}
-                href={item.href}
-                onClick={() => setIsOpen(false)}
-                className="block px-6 py-2 text-white hover:text-wow-gold hover:bg-wow-gold/10 transition-colors duration-300 text-sm"
-              >
-                {item.label}
-              </a>
-            ))}
+            {navItems.map((item) => {
+              const IconComponent = item.icon;
+              return (
+                <a
+                  key={item.href}
+                  href={item.href}
+                  onClick={() => setIsOpen(false)}
+                  className="flex items-center gap-2 px-6 py-2 text-white hover:text-wow-gold hover:bg-wow-gold/10 
+                    transition-colors duration-300 text-sm group"
+                >
+                  <IconComponent 
+                    size={16} 
+                    className="group-hover:animate-float text-wow-gold/80 group-hover:text-wow-gold" 
+                  />
+                  {item.label}
+                </a>
+              );
+            })}
           </div>
         </div>
       </div>

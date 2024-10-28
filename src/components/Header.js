@@ -1,4 +1,3 @@
-// Header.js
 import React, { useState } from 'react';
 import { Github, Linkedin } from 'lucide-react';
 import { useScrollAnimation } from '../hooks/useScrollAnimation';
@@ -52,7 +51,7 @@ export const Header = () => {
         <div className={`relative group w-32 md:w-48 animate-slide-right ${isVisible ? 'slide-right-end' : 'slide-right-start'}`}>
           <div className="absolute -inset-1 bg-gradient-to-r from-wow-gold via-white to-wow-gold rounded-lg blur opacity-25 group-hover:opacity-75 transition duration-1000 group-hover:duration-200" />
           <div 
-            className="relative h-44 md:h-64 border-4 border-wow-bg rounded-lg overflow-hidden bg-wow-bg cursor-pointer animate-float"
+            className="relative h-58 md:h-76 border-4 border-wow-bg rounded-lg overflow-hidden bg-wow-bg cursor-pointer animate-float"
             onClick={handleImageClick}
           >
             <img 
@@ -75,6 +74,7 @@ export const Header = () => {
           </div>
         </div>
         
+        {/* Rest of the component remains the same */}
         <div className="flex-1 space-y-4 text-center md:text-left">
           <h1 className={`text-4xl md:text-6xl font-bold mb-4 text-wow-gold animate-slide-right ${isVisible ? 'slide-right-end' : 'slide-right-start'}`}>
             Cody Hinz

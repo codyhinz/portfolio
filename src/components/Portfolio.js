@@ -45,8 +45,10 @@ const Portfolio = () => {
       <Navigation />
       
       <div className="relative z-10 min-h-screen px-4 sm:px-6 md:px-8 pt-12 sm:pt-16">
+        
         <Header />
         <Achievements achievements={achievements} />
+        <Contact />
         <Skills />
         <Education />
         <Experience />
@@ -56,7 +58,6 @@ const Portfolio = () => {
           setSelectedClass={setSelectedClass}
         />
         <ParsePerformance />
-        <Contact />
       </div>
     </div>
   );

@@ -29,13 +29,13 @@ export const Navigation = () => {
   const navItems = [
     { label: 'About', href: '#header', icon: User },
     { label: 'Achievements', href: '#achievements', icon: Trophy },
+    { label: 'Contact', href: '#contact', icon: Contact2 },
     { label: 'Skills', href: '#skills', icon: Swords },
     { label: 'Education', href: '#education', icon: GraduationCap },
     { label: 'Experience', href: '#experience', icon: Briefcase },
     { label: 'Projects', href: '#projects', icon: Code2 },
     { label: 'Abilities', href: '#class-selection', icon: Shield },
-    { label: 'Parse Performance', href: '#parse-performance', icon: BarChart2 },
-    { label: 'Contact', href: '#contact', icon: Contact2 }
+    { label: 'Parse Performance', href: '#parse-performance', icon: BarChart2 }
   ];
 
   return (

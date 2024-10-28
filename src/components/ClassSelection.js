@@ -67,7 +67,12 @@ export const ClassSelection = ({ selectedClass, setSelectedClass }) => {
   const [classRef, isVisible] = useScrollAnimation(0.1);
 
   return (
-    <div ref={classRef} id="class-selection" className="relative mb-12 scroll-mt-24 rounded-lg border-2 border-wow-border overflow-hidden">
+    <div ref={classRef} id="class-selection" className="relative mb-12 scroll-mt-24 rounded-lg overflow-hidden"
+      style={{ 
+        borderWidth: '2px',
+        borderStyle: 'solid',
+        borderColor: selectedClass ? classColors[selectedClass] : '#4a3a22'
+      }}>
       <div className="absolute inset-0 w-full h-full -z-10 transform-gpu overflow-hidden">
         <div 
           className="absolute inset-0 transition-all duration-1000 ease-in-out"
@@ -99,11 +104,13 @@ export const ClassSelection = ({ selectedClass, setSelectedClass }) => {
                   key={key}
                   onClick={() => setSelectedClass(key)}
                   className={`w-full group relative overflow-hidden rounded-lg transition-all duration-300 
-                    animate-scale stagger-${index + 1} ${isVisible ? 'scale-end' : 'scale-start'}
-                    border-2 ${selectedClass === key ? 'border-current' : 'border-wow-border hover:border-current'}`}
+                    animate-scale stagger-${index + 1} ${isVisible ? 'scale-end' : 'scale-start'}`}
                   style={{ 
                     color: classColors[key],
-                    backgroundColor: selectedClass === key ? `${classColors[key]}20` : 'transparent'
+                    backgroundColor: selectedClass === key ? `${classColors[key]}20` : 'transparent',
+                    borderWidth: '2px',
+                    borderStyle: 'solid',
+                    borderColor: selectedClass === key ? classColors[key] : '#4a3a22'
                   }}
                 >
                   <div className={`absolute inset-0 transition-all duration-300
@@ -117,11 +124,7 @@ export const ClassSelection = ({ selectedClass, setSelectedClass }) => {
                     <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/75 to-black/90" />
                   </div>
 
-                  <div className={`relative flex items-center p-4 transition-all duration-300
-                    ${selectedClass === key 
-                      ? `bg-[${classColors[key]}]/20` 
-                      : 'bg-black/30 hover:bg-black/40'}`}
-                  >
+                  <div className={`relative flex items-center p-4 transition-all duration-300`}>
                     <div className="relative">
                       <div className="absolute inset-0 rounded-full bg-black/50 backdrop-blur-sm" />
                       <img 
@@ -143,10 +146,6 @@ export const ClassSelection = ({ selectedClass, setSelectedClass }) => {
                       ${selectedClass === key ? 'translate-x-0 opacity-100' : '-translate-x-4 opacity-0 group-hover:translate-x-0 group-hover:opacity-100'}`}
                     />
                   </div>
-
-                  {selectedClass === key && (
-                    <div className="absolute inset-0 border-2 border-current rounded-lg animate-pulse" />
-                  )}
                 </button>
               ))}
             </div>
@@ -169,8 +168,13 @@ const ClassDetails = ({ selectedClassName, classData, isVisible }) => {
   if (!selectedClassName || !classData) return null;
 
   return (
-    <div className={`bg-black/40 backdrop-blur-sm rounded-lg border-2 transition-colors duration-300 p-6 space-y-6
-      ${selectedClassName ? `border-[${classColors[selectedClassName]}] bg-[${classColors[selectedClassName]}]/10` : 'border-wow-border'}`}>
+    <div className={`bg-black/40 backdrop-blur-sm rounded-lg p-6 space-y-6 transition-all duration-300`}
+      style={{
+        backgroundColor: `${classColors[selectedClassName]}10`,
+        borderWidth: '2px',
+        borderStyle: 'solid',
+        borderColor: classColors[selectedClassName]
+      }}>
       <div className="flex flex-col md:flex-row items-start md:items-center gap-6 md:gap-8">
         <div className="relative flex-shrink-0">
           <div className="absolute inset-0 rounded-full bg-black/50 backdrop-blur-sm" />
@@ -208,9 +212,12 @@ const ClassDetails = ({ selectedClassName, classData, isVisible }) => {
             return (
               <div
                 key={index}
-                className={`group relative overflow-hidden rounded-lg border-2 transition-all duration-300 
-                  bg-black/30 hover:bg-[${classColors[selectedClassName]}]/20`}
-                style={{ borderColor: `${classColors[selectedClassName]}40` }}
+                className="group relative overflow-hidden rounded-lg transition-all duration-300 bg-black/30"
+                style={{ 
+                  borderWidth: '2px',
+                  borderStyle: 'solid',
+                  borderColor: `${classColors[selectedClassName]}40`
+                }}
               >
                 <div className="relative p-4 flex gap-4">
                   <div className="relative flex-shrink-0">

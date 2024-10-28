@@ -2,6 +2,9 @@ import React, { useState } from 'react';
 import { useScrollAnimation } from '../hooks/useScrollAnimation';
 import { Mail, MapPin, Phone, Check, Copy, ExternalLink, FileDown, Loader2 } from 'lucide-react';
 import contactBg from '../assets/shattrath.jpg';
+// Import your resume files
+import simpleResume from '../assets/resumes/Resume-Simple.docx';
+import completeResume from '../assets/resumes/Resume-Complete.pdf';
 
 export const Contact = () => {
   const [showToast, setShowToast] = useState(false);
@@ -10,13 +13,6 @@ export const Contact = () => {
   const [isDownloading, setIsDownloading] = useState(false);
   const [contactRef, isVisible] = useScrollAnimation(0.1);
   
-  const getBasePath = () => {
-    if (window.location.hostname === 'localhost') {
-      return '';
-    }
-    return '/portfolio'; // Replace with your repository name
-  };
-
   const handleCopy = async (text, type) => {
     try {
       await navigator.clipboard.writeText(text);
@@ -25,46 +21,6 @@ export const Contact = () => {
       setTimeout(() => setShowToast(false), 2000);
     } catch (err) {
       console.error('Failed to copy:', err);
-    }
-  };
-
-  const handleDownload = async (type) => {
-    try {
-      setIsDownloading(true);
-      let response;
-      let filename;
-      const basePath = getBasePath();
-      
-      if (type === 'simple') {
-        response = await fetch(`${basePath}/Resume.docx`);
-        filename = 'Cody-Hinz-Resume-Simple.docx';
-      } else {
-        response = await fetch(`${basePath}/Resume-Complete.pdf`);
-        filename = 'Cody-Hinz-Resume-Complete.pdf';
-      }
-
-      if (!response.ok) throw new Error('Download failed');
-      
-      const blob = await response.blob();
-      const downloadUrl = window.URL.createObjectURL(blob);
-      const link = document.createElement('a');
-      link.href = downloadUrl;
-      link.download = filename;
-      document.body.appendChild(link);
-      link.click();
-      link.remove();
-      window.URL.revokeObjectURL(downloadUrl);
-      
-      setToastMessage('Download started!');
-      setShowToast(true);
-    } catch (error) {
-      setToastMessage('Download failed. Please try again.');
-      setShowToast(true);
-      console.error('Download error:', error);
-    } finally {
-      setIsDownloading(false);
-      setActiveDropdown(null);
-      setTimeout(() => setShowToast(false), 2000);
     }
   };
 
@@ -178,9 +134,16 @@ export const Contact = () => {
             {activeDropdown === 'resume' && (
               <div className={`absolute bottom-full left-0 w-full mb-2 bg-black/90 border border-wow-gold 
                 rounded-lg overflow-hidden animate-slide-up ${activeDropdown === 'resume' ? 'slide-up-end' : 'slide-up-start'}`}>
-                <button
-                  onClick={() => handleDownload('simple')}
-                  disabled={isDownloading}
+                <a
+                  href={simpleResume}
+                  download="Cody-Hinz-Resume-Simple.docx"
+                  onClick={() => {
+                    setIsDownloading(true);
+                    setTimeout(() => {
+                      setIsDownloading(false);
+                      setActiveDropdown(null);
+                    }, 1000);
+                  }}
                   className="flex items-center gap-2 p-3 hover:bg-wow-gold/20 transition-colors w-full text-left text-white disabled:opacity-50"
                 >
                   {isDownloading ? (
@@ -189,10 +152,17 @@ export const Contact = () => {
                     <FileDown className="w-4 h-4 text-wow-gold animate-float" />
                   )}
                   <span>Simple Resume (DOCX)</span>
-                </button>
-                <button
-                  onClick={() => handleDownload('complete')}
-                  disabled={isDownloading}
+                </a>
+                <a
+                  href={completeResume}
+                  download="Cody-Hinz-Resume-Complete.pdf"
+                  onClick={() => {
+                    setIsDownloading(true);
+                    setTimeout(() => {
+                      setIsDownloading(false);
+                      setActiveDropdown(null);
+                    }, 1000);
+                  }}
                   className="flex items-center gap-2 p-3 hover:bg-wow-gold/20 transition-colors w-full text-left text-white disabled:opacity-50"
                 >
                   {isDownloading ? (
@@ -201,7 +171,7 @@ export const Contact = () => {
                     <FileDown className="w-4 h-4 text-wow-gold animate-float" />
                   )}
                   <span>Complete Resume (PDF)</span>
-                </button>
+                </a>
               </div>
             )}
             <button

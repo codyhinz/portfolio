@@ -1,10 +1,11 @@
 {
   "files": {
     "main.css": "/portfolio/static/css/main.f0fbdf7d.css",
-    "main.js": "/portfolio/static/js/main.8bc47d7c.js",
+    "main.js": "/portfolio/static/js/main.9d69badf.js",
     "static/js/453.1407b060.chunk.js": "/portfolio/static/js/453.1407b060.chunk.js",
     "static/media/stormwindwarroom.png": "/portfolio/static/media/stormwindwarroom.442f5fa4843dc5ad94f2.png",
     "static/media/pfp.png": "/portfolio/static/media/pfp.28745b46e26d439fba1d.png",
+    "static/media/Resume-Simple.docx": "/portfolio/static/media/Resume-Simple.de46f059ea58775042d8.docx",
     "static/media/karalibrary.jpg": "/portfolio/static/media/karalibrary.02bce88cc5bd81c0db87.jpg",
     "static/media/orgrimmararena.jpg": "/portfolio/static/media/orgrimmararena.13c35b41dbaa7b666657.jpg",
     "static/media/druidorderhall.jpg": "/portfolio/static/media/druidorderhall.5ece6635acba0b90afaf.jpg",
@@ -26,6 +27,7 @@
     "static/media/battleshout.png": "/portfolio/static/media/battleshout.e3f526886c3a7ecb3ed8.png",
     "static/media/pillaroffrost.png": "/portfolio/static/media/pillaroffrost.e28f771040d5793290f4.png",
     "static/media/mntnmandan.png": "/portfolio/static/media/mntnmandan.751dde7868f1e0da330a.png",
+    "static/media/Resume-Complete.pdf": "/portfolio/static/media/Resume-Complete.0c5bc3cf8e97bf1b8076.pdf",
     "static/media/rake.png": "/portfolio/static/media/rake.b3c1ddd8c014d3b7760b.png",
     "static/media/tacticalmastery.png": "/portfolio/static/media/tacticalmastery.e423a96b5881a11324ea.png",
     "static/media/rip.png": "/portfolio/static/media/rip.88d7c3ae99232f6cf68d.png",
@@ -39,11 +41,11 @@
     "static/media/souldan.png": "/portfolio/static/media/souldan.e881a55222e476ad478d.png",
     "index.html": "/portfolio/index.html",
     "main.f0fbdf7d.css.map": "/portfolio/static/css/main.f0fbdf7d.css.map",
-    "main.8bc47d7c.js.map": "/portfolio/static/js/main.8bc47d7c.js.map",
+    "main.9d69badf.js.map": "/portfolio/static/js/main.9d69badf.js.map",
     "453.1407b060.chunk.js.map": "/portfolio/static/js/453.1407b060.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.f0fbdf7d.css",
-    "static/js/main.8bc47d7c.js"
+    "static/js/main.9d69badf.js"
   ]
 }

@@ -10,6 +10,13 @@ export const Contact = () => {
   const [isDownloading, setIsDownloading] = useState(false);
   const [contactRef, isVisible] = useScrollAnimation(0.1);
   
+  const getBasePath = () => {
+    if (window.location.hostname === 'localhost') {
+      return '';
+    }
+    return '/portfolio'; // Replace with your repository name
+  };
+
   const handleCopy = async (text, type) => {
     try {
       await navigator.clipboard.writeText(text);
@@ -26,12 +33,13 @@ export const Contact = () => {
       setIsDownloading(true);
       let response;
       let filename;
+      const basePath = getBasePath();
       
       if (type === 'simple') {
-        response = await fetch('/Resume.docx');
+        response = await fetch(`${basePath}/Resume.docx`);
         filename = 'Cody-Hinz-Resume-Simple.docx';
       } else {
-        response = await fetch('/Resume-Complete.pdf');
+        response = await fetch(`${basePath}/Resume-Complete.pdf`);
         filename = 'Cody-Hinz-Resume-Complete.pdf';
       }
 
@@ -212,7 +220,7 @@ export const Contact = () => {
             </button>
           </div>
 
-          {/* Address - Moved to end */}
+          {/* Address */}
           <div className={`animate-slide-up stagger-4 ${isVisible ? 'slide-up-end' : 'slide-up-start'}`}>
             <div className="flex items-center justify-center gap-2 p-4 rounded-lg bg-gradient-to-b from-wow-gold/20 
               to-transparent border border-wow-border">

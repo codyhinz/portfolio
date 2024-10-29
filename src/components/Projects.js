@@ -11,6 +11,18 @@ const INITIAL_SNAKE = [[10, 10]];
 const INITIAL_DIRECTION = [1, 0];
 const INITIAL_FOOD = [15, 15];
 
+// Project descriptions
+const PROJECT_DESCRIPTIONS = {
+  snake: {
+    title: "Snake Game Implementation",
+    description: "A classic Snake game reimagined with a modern twist, featuring both JavaScript and Python implementations. This project demonstrates cross-language development skills and game logic implementation, complete with collision detection, score tracking, and responsive controls. The Python version utilizes Pygame for graphics, while the web version uses HTML5 Canvas."
+  },
+  pokedex: {
+    title: "Interactive Pokédex",
+    description: "A dynamic Pokédex application that interfaces with the PokéAPI to display detailed information about Pokémon. Features real-time searching and filtering capabilities, responsive design, and beautiful type-based styling. This project showcases API integration, state management, and modern UI/UX principles."
+  }
+};
+
 // Pokemon type colors
 const typeColors = {
   normal: '#A8A878',
@@ -61,6 +73,16 @@ const Projects = () => {
 
         <ProjectSelector activeProject={activeProject} setActiveProject={setActiveProject} />
 
+        {/* Project Description */}
+        <div className={`mb-8 bg-black/20 p-6 rounded-lg border border-wow-border animate-fade ${isVisible ? 'fade-end' : 'fade-start'}`}>
+          <h3 className="text-xl font-bold text-wow-gold mb-2">
+            {PROJECT_DESCRIPTIONS[activeProject].title}
+          </h3>
+          <p className="text-white/90 leading-relaxed">
+            {PROJECT_DESCRIPTIONS[activeProject].description}
+          </p>
+        </div>
+
         {activeProject === 'snake' ? (
           <SnakeGame isVisible={isVisible} />
         ) : (
@@ -70,6 +92,7 @@ const Projects = () => {
     </section>
   );
 };
+
 
 // Project Selector Component
 const ProjectSelector = ({ activeProject, setActiveProject }) => (

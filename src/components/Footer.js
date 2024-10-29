@@ -16,7 +16,7 @@ import {
   Settings
 } from 'lucide-react';
 import { useScrollAnimation } from '../hooks/useScrollAnimation';
-import footerBg from '../assets/shattrath.jpg';
+import footerBg from '../assets/stormwindgates.png';
 
 export const Footer = () => {
   const [footerRef, isVisible] = useScrollAnimation(0.1);

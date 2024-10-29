@@ -1,7 +1,7 @@
 import React from 'react';
 import { Code2, Coffee } from 'lucide-react';
 
-const Footer = () => {
+export const Footer = () => {
   const technologies = [
     {
       category: "Frontend",
@@ -22,7 +22,7 @@ const Footer = () => {
   ];
 
   return (
-    <footer className="relative mt-12 rounded-lg border-2 border-wow-border bg-black/90 overflow-hidden">
+    <footer id="footer" className="relative mt-12 rounded-lg border-2 border-wow-border bg-black/90 overflow-hidden">
       {/* Gradient Line */}
       <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-wow-gold to-transparent opacity-50" />
       

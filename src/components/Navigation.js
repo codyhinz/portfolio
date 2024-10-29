@@ -10,7 +10,8 @@ import {
   Code2, 
   Shield, 
   BarChart2, 
-  Contact2 
+  Contact2,
+  Library
 } from 'lucide-react';
 
 export const Navigation = () => {
@@ -35,7 +36,8 @@ export const Navigation = () => {
     { label: 'Experience', href: '#experience', icon: Briefcase },
     { label: 'Projects', href: '#projects', icon: Code2 },
     { label: 'Abilities', href: '#class-selection', icon: Shield },
-    { label: 'Parse Performance', href: '#parse-performance', icon: BarChart2 }
+    { label: 'Parse Performance', href: '#parse-performance', icon: BarChart2 },
+    { label: 'Technologies', href: '#footer', icon: Library }
   ];
 
   return (

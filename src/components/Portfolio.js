@@ -8,6 +8,7 @@ import { Header } from './Header';
 import { Navigation } from './Navigation';
 import { ParsePerformance } from './ParsePerformance';
 import { Skills } from './Skills';
+import { Footer } from './Footer';
 
 import backgroundImage from '../assets/bt.png';
 import Projects from './Projects';
@@ -58,6 +59,7 @@ const Portfolio = () => {
           setSelectedClass={setSelectedClass}
         />
         <ParsePerformance />
+        <Footer />
       </div>
     </div>
   );

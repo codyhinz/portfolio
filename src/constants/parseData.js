@@ -42,8 +42,8 @@ export const parsePerformances = [
     profilePicture: danzeldProfile,
     specIcon: armsIcon,
     overallParse: 92.1,
-    bestParse: 99,
-    ilvlParse: 93,
+    bestParse: 100,
+    ilvlParse: 94,
     tierName: "Heroic Tier 11",
     kills: 224,
     faction: "Alliance"

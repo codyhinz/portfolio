@@ -45,7 +45,7 @@ export const parsePerformances = [
     bestParse: 100,
     ilvlParse: 94,
     tierName: "Heroic Tier 11",
-    kills: 224,
+    kills: 237,
     faction: "Alliance"
   },
   {

@@ -11,18 +11,6 @@ const INITIAL_SNAKE = [[10, 10]];
 const INITIAL_DIRECTION = [1, 0];
 const INITIAL_FOOD = [15, 15];
 
-// Project descriptions
-const PROJECT_DESCRIPTIONS = {
-  snake: {
-    title: "Snake Game Implementation",
-    description: "A classic Snake game reimagined with a modern twist, featuring both JavaScript and Python implementations. This project demonstrates cross-language development skills and game logic implementation, complete with collision detection, score tracking, and responsive controls. The Python version utilizes Pygame for graphics, while the web version uses HTML5 Canvas."
-  },
-  pokedex: {
-    title: "Interactive Pokédex",
-    description: "A dynamic Pokédex application that interfaces with the PokéAPI to display detailed information about Pokémon. Features real-time searching and filtering capabilities, responsive design, and beautiful type-based styling. This project showcases API integration, state management, and modern UI/UX principles."
-  }
-};
-
 // Pokemon type colors
 const typeColors = {
   normal: '#A8A878',
@@ -43,6 +31,18 @@ const typeColors = {
   dark: '#705848',
   steel: '#B8B8D0',
   fairy: '#EE99AC'
+};
+
+// Project descriptions
+const PROJECT_DESCRIPTIONS = {
+  snake: {
+    title: "Snake Game Implementation",
+    description: "A classic Snake game reimagined with a modern twist, featuring both JavaScript and Python implementations. This project demonstrates cross-language development skills and game logic implementation, complete with collision detection, score tracking, and responsive controls."
+  },
+  pokedex: {
+    title: "Interactive Pokédex",
+    description: "A dynamic Pokédex application that interfaces with the PokéAPI to display detailed information about Pokémon. Features real-time searching and filtering capabilities, responsive design, and beautiful type-based styling."
+  }
 };
 
 const Projects = () => {
@@ -92,7 +92,6 @@ const Projects = () => {
     </section>
   );
 };
-
 
 // Project Selector Component
 const ProjectSelector = ({ activeProject, setActiveProject }) => (
@@ -306,37 +305,52 @@ const PokemonCard = ({ pokemon }) => (
       <img
         src={pokemon.sprites.front_default}
         alt={pokemon.name}
-        className="w-32 h-32 mx-auto transform group-hover:scale-110 transition-transform duration-300"
+        className="w-24 h-24 mx-auto transform group-hover:scale-110 transition-transform duration-300"
       />
       <span className="absolute top-0 right-0 text-wow-gold/80 text-sm">
         #{pokemon.id.toString().padStart(3, '0')}
       </span>
     </div>
-    <h3 className="text-wow-gold text-lg font-semibold capitalize text-center mb-2">
+    <h3 className="text-wow-gold text-base font-semibold capitalize text-center mb-2">
       {pokemon.name}
     </h3>
-    <div className="flex justify-center gap-2">
+    <div className="flex justify-center gap-1.5 flex-wrap mb-3">
       {pokemon.types.map((type) => (
         <span
           key={type.type.name}
-          className="px-3 py-1 rounded-full text-white text-sm capitalize"
+          className="px-2.5 py-0.5 rounded-full text-white text-xs capitalize"
           style={{ backgroundColor: `${typeColors[type.type.name]}80` }}
         >
           {type.type.name}
         </span>
       ))}
     </div>
-    <div className="mt-4 text-sm">
-      <div className="grid grid-cols-2 gap-2">
-        {pokemon.stats.map((stat) => (
-          <div key={stat.stat.name} className="flex justify-between items-center">
-            <span className="text-white/80 capitalize">
-              {stat.stat.name.replace('-', ' ')}:
-            </span>
-            <span className="text-wow-gold">{stat.base_stat}</span>
+    <div className="space-y-1.5">
+      {pokemon.stats.map((stat) => (
+        <div key={stat.stat.name} className="flex justify-between items-center text-xs">
+          <span className="text-white/80 capitalize w-20 truncate">
+            {stat.stat.name.replace('-', ' ')}:
+          </span>
+          <div className="flex-1 mx-2">
+            <div className="w-full bg-black/40 rounded-full h-1.5">
+              <div
+                className="h-full rounded-full transition-transform duration-500"
+                style={{
+                  width: `${(stat.base_stat / 255) * 100}%`,
+                  backgroundColor: stat.base_stat > 150 
+                    ? '#FFD700' 
+                    : stat.base_stat > 100 
+                      ? '#FF8000' 
+                      : stat.base_stat > 50 
+                        ? '#0070dd' 
+                        : '#666666'
+                }}
+              />
+            </div>
           </div>
-        ))}
-      </div>
+          <span className="text-wow-gold w-8 text-right">{stat.base_stat}</span>
+        </div>
+      ))}
     </div>
   </div>
 );
@@ -348,6 +362,8 @@ const PokemonSearch = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedType, setSelectedType] = useState('');
   const [isLoading, setIsLoading] = useState(true);
+  const [currentPage, setCurrentPage] = useState(0);
+  const pokemonPerPage = 9;
 
   useEffect(() => {
     const fetchPokemon = async () => {
@@ -392,41 +408,45 @@ const PokemonSearch = () => {
       }
       
       setFilteredPokemon(filtered);
+      setCurrentPage(0);
     };
 
     filterPokemon();
   }, [searchTerm, selectedType, pokemonData]);
 
-  const handleSearchChange = (e) => {
-    setSearchTerm(e.target.value);
-  };
+  const paginatedPokemon = filteredPokemon.slice(
+    currentPage * pokemonPerPage,
+    (currentPage + 1) * pokemonPerPage
+  );
 
-  const handleTypeChange = (e) => {
-    setSelectedType(e.target.value);
-  };
+  const totalPages = Math.ceil(filteredPokemon.length / pokemonPerPage);
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4">
       <div className="flex flex-col md:flex-row gap-4 bg-black/20 p-4 rounded-lg border border-wow-border">
         {/* Search Input */}
         <div className="flex-1 relative">
-          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-wow-gold/50" size={20} />
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-wow-gold/50" size={20} />
           <input
             type="text"
             placeholder="Search by name or number..."
             value={searchTerm}
-            onChange={handleSearchChange}
-            className="w-full pl-10 pr-4 py-2 bg-black/40 border border-wow-border rounded-lg text-white placeholder-wow-gold/30 focus:border-wow-gold focus:outline-none transition-colors"
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="w-full pl-10 pr-4 py-2 bg-black/40 border border-wow-border rounded-lg 
+              text-white placeholder-wow-gold/30 focus:border-wow-gold focus:outline-none 
+              transition-colors"
           />
         </div>
 
         {/* Type Filter */}
         <div className="relative">
-          <Filter className="absolute left-3 top-1/2 transform -translate-y-1/2 text-wow-gold/50" size={20} />
+          <Filter className="absolute left-3 top-1/2 -translate-y-1/2 text-wow-gold/50" size={20} />
           <select
             value={selectedType}
-            onChange={handleTypeChange}
-            className="pl-10 pr-4 py-2 bg-black/40 border border-wow-border rounded-lg text-white focus:border-wow-gold focus:outline-none transition-colors appearance-none cursor-pointer"
+            onChange={(e) => setSelectedType(e.target.value)}
+            className="pl-10 pr-4 py-2 bg-black/40 border border-wow-border rounded-lg text-white 
+              focus:border-wow-gold focus:outline-none transition-colors appearance-none cursor-pointer
+              min-w-[150px]"
           >
             <option value="">All Types</option>
             {Object.keys(typeColors).map(type => (
@@ -438,20 +458,40 @@ const PokemonSearch = () => {
         </div>
       </div>
 
-      {/* Loading State */}
       {isLoading ? (
         <div className="flex justify-center items-center h-64">
           <Loader2 className="w-8 h-8 text-wow-gold animate-spin" />
         </div>
       ) : (
-        /* Pokemon Grid */
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {filteredPokemon.map(pokemon => (
-            <PokemonCard key={pokemon.id} pokemon={pokemon} />
-          ))}
-          {filteredPokemon.length === 0 && (
-            <div className="col-span-full text-center py-8 text-wow-gold">
-              No Pokemon found matching your search criteria
+        <div className="space-y-4">
+          <div className="h-[480px] overflow-y-auto scrollbar-thin scrollbar-thumb-wow-gold 
+            scrollbar-track-black/20 scrollbar-thumb-rounded-full scrollbar-track-rounded-full pr-2">
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+              {paginatedPokemon.map(pokemon => (
+                <PokemonCard key={pokemon.id} pokemon={pokemon} />
+              ))}
+              {paginatedPokemon.length === 0 && (
+                <div className="col-span-full text-center py-8 text-wow-gold">
+                  No Pokemon found matching your search criteria
+                </div>
+              )}
+            </div>
+          </div>
+
+          {filteredPokemon.length > pokemonPerPage && (
+            <div className="flex justify-center gap-2 flex-wrap">
+              {Array.from({ length: totalPages }).map((_, index) => (
+                <button
+                  key={index}
+                  onClick={() => setCurrentPage(index)}
+                  className={`px-3 py-1 rounded-md transition-colors duration-200 
+                    ${currentPage === index 
+                      ? 'bg-wow-gold text-black font-semibold' 
+                      : 'bg-black/40 text-wow-gold hover:bg-wow-gold/20'}`}
+                >
+                  {index + 1}
+                </button>
+              ))}
             </div>
           )}
         </div>

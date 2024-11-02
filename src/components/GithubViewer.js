@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { 
   FolderOpen, 
   File, 
@@ -8,7 +8,9 @@ import {
   Github,
   Code2,
   RefreshCw,
-  Search
+  Search,
+  AlertTriangle,
+  Folder
 } from 'lucide-react';
 
 const GithubViewer = () => {
@@ -19,57 +21,95 @@ const GithubViewer = () => {
   const [selectedFile, setSelectedFile] = useState(null);
   const [fileContent, setFileContent] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
+  const [folderContents, setFolderContents] = useState({});
 
-  // Replace these with your GitHub details
+  // GitHub configuration
   const username = 'codyhinz';
   const repo = 'portfolio';
   const branch = 'main';
+  const token = import.meta.env.VITE_GITHUB_TOKEN;
 
-  const fetchRepoContents = async (path = '') => {
+  const headers = token ? {
+    Authorization: `token ${token}`,
+    Accept: 'application/vnd.github.v3+json',
+  } : {
+    Accept: 'application/vnd.github.v3+json',
+  };
+
+  const fetchRepoContents = useCallback(async (path = '') => {
     try {
       const response = await fetch(
-        `https://api.github.com/repos/${username}/${repo}/contents/${path}?ref=${branch}`
+        `https://api.github.com/repos/${username}/${repo}/contents/${path}?ref=${branch}`,
+        { headers }
       );
-      if (!response.ok) throw new Error('Failed to fetch repository contents');
+      
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || 'Failed to fetch repository contents');
+      }
+      
       const data = await response.json();
-      setRepoData(data);
+      if (path === '') {
+        setRepoData(data);
+      } else {
+        setFolderContents(prev => ({
+          ...prev,
+          [path]: data
+        }));
+      }
       setLoading(false);
     } catch (err) {
       setError(err.message);
       setLoading(false);
     }
-  };
+  }, [username, repo, branch, headers]);
 
-  const fetchFileContent = async (path) => {
+  const fetchFileContent = useCallback(async (path) => {
     try {
+      setFileContent('Loading...');
       const response = await fetch(
-        `https://api.github.com/repos/${username}/${repo}/contents/${path}?ref=${branch}`
+        `https://api.github.com/repos/${username}/${repo}/contents/${path}?ref=${branch}`,
+        { headers }
       );
-      if (!response.ok) throw new Error('Failed to fetch file content');
+      
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || 'Failed to fetch file content');
+      }
+      
       const data = await response.json();
-      const content = atob(data.content); // Decode base64 content
+      const content = atob(data.content);
       setFileContent(content);
+      setError(null);
     } catch (err) {
-      setError(err.message);
+      setError(`Failed to load file: ${err.message}`);
+      setFileContent('');
     }
-  };
+  }, [username, repo, branch, headers]);
 
   useEffect(() => {
     fetchRepoContents();
-    const interval = setInterval(fetchRepoContents, 30000); // Refresh every 30 seconds
-    return () => clearInterval(interval);
-  }, []);
-
-  const toggleFolder = (path) => {
-    setExpandedFolders(prev => {
-      const newSet = new Set(prev);
-      if (newSet.has(path)) {
-        newSet.delete(path);
-      } else {
-        newSet.add(path);
+    const interval = setInterval(() => {
+      if (selectedFile) {
+        fetchFileContent(selectedFile.path);
       }
-      return newSet;
-    });
+      fetchRepoContents();
+    }, 30000); // Refresh every 30 seconds
+    
+    return () => clearInterval(interval);
+  }, [selectedFile, fetchRepoContents, fetchFileContent]);
+
+  const toggleFolder = async (path) => {
+    if (expandedFolders.has(path)) {
+      const newSet = new Set(expandedFolders);
+      newSet.delete(path);
+      setExpandedFolders(newSet);
+    } else {
+      if (!folderContents[path]) {
+        await fetchRepoContents(path);
+      }
+      setExpandedFolders(new Set([...expandedFolders, path]));
+    }
   };
 
   const handleFileClick = async (file) => {
@@ -84,18 +124,52 @@ const GithubViewer = () => {
     );
   };
 
-  if (loading) {
+  const renderTree = (items, level = 0) => {
+    if (!items) return null;
+
+    return filterItems(items).map((item) => (
+      <div key={item.path} className={`py-1 ${level > 0 ? 'ml-4' : ''}`}>
+        {item.type === 'dir' ? (
+          <div>
+            <button
+              onClick={() => toggleFolder(item.path)}
+              className="flex items-center gap-2 w-full text-left hover:text-wow-gold transition-colors py-1 px-2 rounded hover:bg-wow-gold/10"
+            >
+              {expandedFolders.has(item.path) ? (
+                <ChevronDown className="w-4 h-4 text-wow-gold" />
+              ) : (
+                <ChevronRight className="w-4 h-4 text-wow-gold" />
+              )}
+              {expandedFolders.has(item.path) ? (
+                <FolderOpen className="w-4 h-4 text-wow-gold" />
+              ) : (
+                <Folder className="w-4 h-4 text-wow-gold" />
+              )}
+              <span className="text-white">{item.name}</span>
+            </button>
+            {expandedFolders.has(item.path) && folderContents[item.path] && (
+              renderTree(folderContents[item.path], level + 1)
+            )}
+          </div>
+        ) : (
+          <button
+            onClick={() => handleFileClick(item)}
+            className={`flex items-center gap-2 w-full text-left hover:text-wow-gold transition-colors py-1 px-2 rounded hover:bg-wow-gold/10
+              ${selectedFile?.path === item.path ? 'bg-wow-gold/20 text-wow-gold' : 'text-white'}`}
+          >
+            <File className="w-4 h-4 text-wow-gold" />
+            <span>{item.name}</span>
+          </button>
+        )}
+      </div>
+    ));
+  };
+
+  if (loading && !repoData) {
     return (
       <div className="flex items-center justify-center p-8">
         <RefreshCw className="w-6 h-6 text-wow-gold animate-spin" />
-      </div>
-    );
-  }
-
-  if (error) {
-    return (
-      <div className="text-red-500 p-4 text-center">
-        Error: {error}
+        <span className="ml-2 text-wow-gold">Loading repository...</span>
       </div>
     );
   }
@@ -119,6 +193,15 @@ const GithubViewer = () => {
         </a>
       </div>
 
+      {error && !loading && (
+        <div className="p-4 bg-red-500/10 border-b border-red-500/20">
+          <div className="flex items-center gap-2 text-red-500">
+            <AlertTriangle className="w-4 h-4" />
+            <span className="text-sm">{error}</span>
+          </div>
+        </div>
+      )}
+
       {/* Search Bar */}
       <div className="p-4 border-b border-wow-border">
         <div className="relative">
@@ -136,40 +219,16 @@ const GithubViewer = () => {
       {/* Content */}
       <div className="grid grid-cols-1 lg:grid-cols-2 divide-x divide-wow-border">
         {/* File Tree */}
-        <div className="p-4 max-h-[600px] overflow-y-auto">
-          {repoData && filterItems(repoData).map((item) => (
-            <div key={item.path} className="py-1">
-              {item.type === 'dir' ? (
-                <div>
-                  <button
-                    onClick={() => toggleFolder(item.path)}
-                    className="flex items-center gap-2 w-full text-left hover:text-wow-gold transition-colors py-1 px-2 rounded hover:bg-wow-gold/10"
-                  >
-                    {expandedFolders.has(item.path) ? (
-                      <ChevronDown className="w-4 h-4 text-wow-gold" />
-                    ) : (
-                      <ChevronRight className="w-4 h-4 text-wow-gold" />
-                    )}
-                    <FolderOpen className="w-4 h-4 text-wow-gold" />
-                    <span className="text-white">{item.name}</span>
-                  </button>
-                </div>
-              ) : (
-                <button
-                  onClick={() => handleFileClick(item)}
-                  className={`flex items-center gap-2 w-full text-left hover:text-wow-gold transition-colors py-1 px-2 rounded hover:bg-wow-gold/10 ml-6 
-                    ${selectedFile?.path === item.path ? 'bg-wow-gold/20 text-wow-gold' : 'text-white'}`}
-                >
-                  <File className="w-4 h-4 text-wow-gold" />
-                  <span>{item.name}</span>
-                </button>
-              )}
+        <div className="p-4 max-h-[600px] overflow-y-auto scrollbar-thin scrollbar-thumb-wow-gold/20 scrollbar-track-black/20">
+          {repoData ? renderTree(repoData) : (
+            <div className="text-white/50 text-center py-8">
+              No files found
             </div>
-          ))}
+          )}
         </div>
 
         {/* File Content */}
-        <div className="p-4 max-h-[600px] overflow-y-auto">
+        <div className="p-4 max-h-[600px] overflow-y-auto scrollbar-thin scrollbar-thumb-wow-gold/20 scrollbar-track-black/20">
           {selectedFile ? (
             <div>
               <div className="flex items-center gap-2 mb-4 pb-2 border-b border-wow-border">
@@ -177,7 +236,7 @@ const GithubViewer = () => {
                 <span className="text-wow-gold font-medium">{selectedFile.name}</span>
               </div>
               <pre className="text-white font-mono text-sm whitespace-pre-wrap">
-                {fileContent}
+                {fileContent || 'Loading...'}
               </pre>
             </div>
           ) : (

@@ -2,6 +2,7 @@ import React from 'react';
 import { useScrollAnimation } from '../hooks/useScrollAnimation';
 import { classes } from '../constants/classData';
 import { ChevronRight } from 'lucide-react';
+
 // Warrior Icons 
 import warriorIcon from '../assets/warrior.png';
 import warriorBg from '../assets/warriororderhall.png';
@@ -9,6 +10,7 @@ import mortalStrikeIcon from '../assets/arms.png';
 import tacticalMasteryIcon from '../assets/tacticalmastery.png';
 import battleShoutIcon from '../assets/battleshout.png';
 import victoryRushIcon from '../assets/victoryrush.png';
+
 // Death Knight Icons
 import deathknightIcon from '../assets/deathknight.png';
 import deathknightBg from '../assets/deathknightorderhall.jpg';
@@ -16,6 +18,7 @@ import obliterateIcon from '../assets/obliterate.png';
 import deathGripIcon from '../assets/deathgrip.png';
 import pillarOfFrostIcon from '../assets/pillaroffrost.png';
 import runicPowerIcon from '../assets/empoweredruneweapon.png';
+
 // Druid Icons
 import druidIcon from '../assets/druid.png';
 import druidBg from '../assets/druidorderhall.jpg';
@@ -23,6 +26,11 @@ import rakeIcon from '../assets/rake.png';
 import ripIcon from '../assets/rip.png';
 import savageRoarIcon from '../assets/savageroar.png';
 import berserkIcon from '../assets/berserk.png';
+
+// Spec Icons
+import armsIcon from '../assets/arms.png';
+import frostIcon from '../assets/frost.png';
+import feralIcon from '../assets/feral.png';
 
 const classBackgrounds = {
   warrior: warriorBg,
@@ -34,6 +42,12 @@ const classIcons = {
   warrior: warriorIcon,
   deathknight: deathknightIcon,
   druid: druidIcon,
+};
+
+const specIcons = {
+  warrior: armsIcon,
+  deathknight: frostIcon,
+  druid: feralIcon,
 };
 
 const abilityIcons = {
@@ -155,6 +169,8 @@ export const ClassSelection = ({ selectedClass, setSelectedClass }) => {
             <ClassDetails 
               selectedClassName={selectedClass}
               classData={classes[selectedClass]}
+              specIcon={selectedClass ? specIcons[selectedClass] : null}
+              classColor={selectedClass ? classColors[selectedClass] : null}
               isVisible={isVisible}
             />
           </div>
@@ -164,32 +180,31 @@ export const ClassSelection = ({ selectedClass, setSelectedClass }) => {
   );
 };
 
-const ClassDetails = ({ selectedClassName, classData, isVisible }) => {
+const ClassDetails = ({ selectedClassName, classData, specIcon, classColor, isVisible }) => {
   if (!selectedClassName || !classData) return null;
 
   return (
     <div className={`bg-black/40 backdrop-blur-sm rounded-lg p-6 space-y-6 transition-all duration-300`}
       style={{
-        backgroundColor: `${classColors[selectedClassName]}10`,
+        backgroundColor: `${classColor}10`,
         borderWidth: '2px',
         borderStyle: 'solid',
-        borderColor: classColors[selectedClassName]
+        borderColor: classColor
       }}>
-      <div className="flex flex-col md:flex-row items-start md:items-center gap-6 md:gap-8">
-        <div className="relative flex-shrink-0">
-          <div className="absolute inset-0 rounded-full bg-black/50 backdrop-blur-sm" />
-          <img 
-            src={classIcons[selectedClassName]} 
-            alt={`${classData.title} icon`} 
-            className="w-20 h-20 animate-float"
-          />
+      <div className="space-y-4">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-4">
+            <img 
+              src={specIcon}
+              alt={`${selectedClassName} specialization`}
+              className="w-12 h-12"
+            />
+            <h3 className="text-3xl font-bold" style={{ color: classColor }}>
+              {classData.title}
+            </h3>
+          </div>
         </div>
-        <div className="flex-1">
-          <h3 className="text-3xl font-bold mb-2" style={{ color: classColors[selectedClassName] }}>
-            {classData.title}
-          </h3>
-          <p className="text-white/70 text-lg">{classData.spec}</p>
-        </div>
+        <p className="text-white/70 text-lg">{classData.spec}</p>
       </div>
 
       <div className="prose prose-invert max-w-none">
@@ -201,7 +216,7 @@ const ClassDetails = ({ selectedClassName, classData, isVisible }) => {
       </div>
 
       <div className="space-y-3">
-        <h4 className="text-xl font-bold" style={{ color: classColors[selectedClassName] }}>
+        <h4 className="text-xl font-bold" style={{ color: classColor }}>
           Core Abilities
         </h4>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -216,20 +231,20 @@ const ClassDetails = ({ selectedClassName, classData, isVisible }) => {
                 style={{ 
                   borderWidth: '2px',
                   borderStyle: 'solid',
-                  borderColor: `${classColors[selectedClassName]}40`
+                  borderColor: `${classColor}40`
                 }}
               >
                 <div className="relative p-4 flex gap-4">
                   <div className="relative flex-shrink-0">
                     <div className="absolute inset-0 rounded-full bg-black/50 backdrop-blur-sm" />
                     <img 
-                      src={abilityIcons[selectedClassName][abilityName]} 
+                      src={abilityIcons[selectedClassName][abilityName]}
                       alt={abilityName}
                       className="w-12 h-12 animate-float group-hover:scale-110 transition-transform duration-300"
                     />
                   </div>
                   <div className="flex-1 min-w-0">
-                    <h4 className="font-bold text-lg mb-2" style={{ color: classColors[selectedClassName] }}>
+                    <h4 className="font-bold text-lg mb-2" style={{ color: classColor }}>
                       {abilityName}
                     </h4>
                     <p className="text-white/80 leading-relaxed">{abilityDescription}</p>

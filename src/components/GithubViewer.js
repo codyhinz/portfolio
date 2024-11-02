@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { 
   Github, 
   ChevronRight, 
@@ -8,7 +8,9 @@ import {
   FileCode,
   GitBranch,
   Loader2,
-  Image
+  Image,
+  Menu,
+  X
 } from 'lucide-react';
 import Prism from 'prismjs';
 import 'prismjs/themes/prism-tomorrow.css';
@@ -45,6 +47,11 @@ const LANGUAGE_CONFIG = {
 
 const EXCLUDED_FILES = ['package-lock.json'];
 
+const getFileLanguage = (filename) => {
+  const ext = filename.split('.').pop().toLowerCase();
+  return LANGUAGE_CONFIG[ext] || { name: 'text', color: '#9e9e9e', backgroundColor: '#9e9e9e10' };
+};
+
 const FileIcon = ({ filename }) => {
   const { color, name } = getFileLanguage(filename);
   return (
@@ -56,11 +63,6 @@ const FileIcon = ({ filename }) => {
       )}
     </div>
   );
-};
-
-const getFileLanguage = (filename) => {
-  const ext = filename.split('.').pop().toLowerCase();
-  return LANGUAGE_CONFIG[ext] || { name: 'text', color: '#9e9e9e', backgroundColor: '#9e9e9e10' };
 };
 
 const ImagePreview = ({ url, fileName }) => {
@@ -170,6 +172,8 @@ const FileTreeItem = React.memo(({
   );
 });
 
+FileTreeItem.displayName = 'FileTreeItem';
+
 const GitHubViewer = ({ username = 'codyhinz', repo = 'portfolio' }) => {
   const [fileTree, setFileTree] = useState(null);
   const [expandedFolders, setExpandedFolders] = useState({});
@@ -178,14 +182,9 @@ const GitHubViewer = ({ username = 'codyhinz', repo = 'portfolio' }) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [activeTab, setActiveTab] = useState(null);
+  const [showFileTree, setShowFileTree] = useState(true);
 
-  useEffect(() => {
-    if (selectedFile && fileContent && getFileLanguage(selectedFile.path).name !== 'image') {
-      Prism.highlightAll();
-    }
-  }, [selectedFile, fileContent]);
-
-  const fetchFileContent = async (url) => {
+  const fetchFileContent = useCallback(async (url) => {
     try {
       const response = await fetch(url);
       const content = await response.text();
@@ -194,9 +193,9 @@ const GitHubViewer = ({ username = 'codyhinz', repo = 'portfolio' }) => {
       setError('Failed to fetch file content');
       return '';
     }
-  };
+  }, []);
 
-  const fetchRepoContents = async (path = '') => {
+  const fetchRepoContents = useCallback(async (path = '') => {
     try {
       const response = await fetch(
         `https://api.github.com/repos/${username}/${repo}/contents/${path}`
@@ -233,7 +232,7 @@ const GitHubViewer = ({ username = 'codyhinz', repo = 'portfolio' }) => {
       setError('Failed to fetch repository contents');
       return null;
     }
-  };
+  }, [username, repo]);
 
   useEffect(() => {
     const initRepo = async () => {
@@ -249,17 +248,23 @@ const GitHubViewer = ({ username = 'codyhinz', repo = 'portfolio' }) => {
     };
 
     initRepo();
-  }, [username, repo]);
+  }, [fetchRepoContents]);
 
-  const toggleFolder = (path) => {
+  useEffect(() => {
+    if (selectedFile && fileContent && getFileLanguage(selectedFile.path).name !== 'image') {
+      Prism.highlightAll();
+    }
+  }, [selectedFile, fileContent]);
+
+  const toggleFolder = useCallback((path) => {
     setExpandedFolders(prev => ({
       ...prev,
       [path]: !prev[path]
     }));
-  };
+  }, []);
 
-  const handleFileSelect = async (file) => {
-    if (file.path === activeTab?.path) return; // Don't reload if already selected
+  const handleFileSelect = useCallback(async (file) => {
+    if (file.path === activeTab?.path) return;
     
     setSelectedFile(file);
     setActiveTab(file);
@@ -268,7 +273,11 @@ const GitHubViewer = ({ username = 'codyhinz', repo = 'portfolio' }) => {
       const content = await fetchFileContent(file.url);
       setFileContent(content);
     }
-  };
+
+    if (window.innerWidth < 768) {
+      setShowFileTree(false);
+    }
+  }, [activeTab, fetchFileContent]);
 
   if (loading) {
     return (
@@ -291,9 +300,18 @@ const GitHubViewer = ({ username = 'codyhinz', repo = 'portfolio' }) => {
 
   return (
     <div className="bg-[#1E1E1E] rounded-lg overflow-hidden border border-white/10">
-      {/* Title Bar */}
       <div className="flex items-center justify-between px-4 py-2 bg-[#323233] border-b border-white/10">
         <div className="flex items-center gap-2">
+          <button 
+            className="md:hidden p-1 hover:bg-white/10 rounded transition-colors"
+            onClick={() => setShowFileTree(!showFileTree)}
+          >
+            {showFileTree ? (
+              <X size={16} className="text-wow-gold" />
+            ) : (
+              <Menu size={16} className="text-wow-gold" />
+            )}
+          </button>
           <Github size={16} className="text-wow-gold" />
           <span className="text-white/90 text-sm font-medium">{repo}</span>
         </div>
@@ -304,7 +322,6 @@ const GitHubViewer = ({ username = 'codyhinz', repo = 'portfolio' }) => {
         </div>
       </div>
 
-      {/* Toolbar */}
       <div className="flex items-center px-4 py-2 bg-[#252526] border-b border-white/10">
         <div className="flex items-center gap-2">
           <GitBranch size={16} className="text-wow-gold" />
@@ -312,11 +329,13 @@ const GitHubViewer = ({ username = 'codyhinz', repo = 'portfolio' }) => {
         </div>
       </div>
 
-      {/* Main Content Area */}
       <div className="flex flex-col h-[500px] md:h-[600px]">
-        <div className="flex flex-col md:flex-row h-full">
-          {/* File Explorer */}
-          <div className="w-full md:w-64 md:border-r border-white/10 overflow-hidden">
+        <div className="flex flex-col md:flex-row h-full relative">
+          <div className={`
+            absolute md:relative w-full md:w-64 md:border-r border-white/10 
+            bg-[#1E1E1E] md:bg-transparent z-20 transition-transform duration-300
+            ${showFileTree ? 'translate-x-0' : '-translate-x-full md:translate-x-0'}
+          `}>
             <div className="h-48 md:h-full overflow-y-auto scrollbar-custom">
               {fileTree && Object.entries(fileTree).map(([name, item]) => (
                 <FileTreeItem 
@@ -332,9 +351,7 @@ const GitHubViewer = ({ username = 'codyhinz', repo = 'portfolio' }) => {
             </div>
           </div>
 
-          {/* Content Area */}
           <div className="flex-1 flex flex-col min-h-0">
-            {/* Tab Bar */}
             <div className="sticky top-0 bg-[#252526] border-b border-white/10 z-10">
               {activeTab ? (
                 <div className="flex items-center gap-2 px-4 py-3 bg-[#1E1E1E] border-r border-white/10">
@@ -353,33 +370,33 @@ const GitHubViewer = ({ username = 'codyhinz', repo = 'portfolio' }) => {
               )}
             </div>
 
-            {/* File Content */}
             <div className="flex-1 overflow-auto bg-[#1E1E1E] p-4 scrollbar-custom">
               {selectedFile ? (
                 <>
                   {getFileLanguage(selectedFile.path).name === 'image' ? (
                     <ImagePreview 
-                      url={selectedFile.url}fileName={selectedFile.path.split('/').pop()} 
-                      />
-                    ) : (
-                      <pre className="text-white/90 text-xs md:text-sm font-mono overflow-x-auto whitespace-pre-wrap break-words">
-                        <code className={`language-${getFileLanguage(selectedFile.path).name}`}>
-                          {fileContent}
-                        </code>
-                      </pre>
-                    )}
-                  </>
-                ) : (
-                  <div className="flex items-center justify-center h-full text-white/50">
-                    Select a file to view its contents
-                  </div>
-                )}
-              </div>
+                      url={selectedFile.url} 
+                      fileName={selectedFile.path.split('/').pop()} 
+                    />
+                  ) : (
+                    <pre className="text-white/90 text-xs md:text-sm font-mono overflow-x-auto whitespace-pre-wrap break-words">
+                      <code className={`language-${getFileLanguage(selectedFile.path).name}`}>
+                        {fileContent}
+                      </code>
+                    </pre>
+                  )}
+                </>
+              ) : (
+                <div className="flex items-center justify-center h-full text-white/50">
+                  Select a file to view its contents
+                </div>
+              )}
             </div>
           </div>
         </div>
       </div>
-    );
-  };
-  
-  export default GitHubViewer;
+    </div>
+  );
+};
+
+export default GitHubViewer;

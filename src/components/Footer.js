@@ -16,7 +16,7 @@ import {
   Github
 } from 'lucide-react';
 import { useScrollAnimation } from '../hooks/useScrollAnimation';
-import GitHubViewer from './GitHubViewer';
+import GitHubViewer from './GithubViewer';
 import footerBg from '../assets/stormwindgates.png';
 
 export const Footer = () => {

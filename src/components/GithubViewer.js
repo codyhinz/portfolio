@@ -23,28 +23,30 @@ const GithubViewer = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [folderContents, setFolderContents] = useState({});
 
-  // GitHub configuration
-  const username = 'codyhinz';
-  const repo = 'portfolio';
-  const branch = 'main';
-  const token = import.meta.env.VITE_GITHUB_TOKEN;
+  const config = useMemo(() => ({
+    username: 'codyhinz',
+    repo: 'portfolio',
+    branch: 'main',
+    token: import.meta.env.REACT_APP_GITHUB_TOKEN || null
+  }), []);
 
-  // Memoize headers to prevent unnecessary rerenders
   const headers = useMemo(() => {
-    return token ? {
-      Authorization: `token ${token}`,
-      Accept: 'application/vnd.github.v3+json',
-    } : {
+    const baseHeaders = {
       Accept: 'application/vnd.github.v3+json',
     };
-  }, [token]);
+
+    return config.token 
+      ? { ...baseHeaders, Authorization: `token ${config.token}` }
+      : baseHeaders;
+  }, [config.token]);
 
   const fetchRepoContents = useCallback(async (path = '') => {
     try {
-      const response = await fetch(
-        `https://api.github.com/repos/${username}/${repo}/contents/${path}?ref=${branch}`,
-        { headers }
-      );
+      setLoading(true);
+      const url = `https://api.github.com/repos/${config.username}/${config.repo}/contents/${path}`;
+      console.log('Fetching:', url);
+
+      const response = await fetch(url, { headers });
       
       if (!response.ok) {
         const errorData = await response.json();
@@ -60,20 +62,20 @@ const GithubViewer = () => {
           [path]: data
         }));
       }
-      setLoading(false);
     } catch (err) {
+      console.error('Fetch error:', err);
       setError(err.message);
+    } finally {
       setLoading(false);
     }
-  }, [username, repo, branch, headers]);
+  }, [config.username, config.repo, headers]);
 
   const fetchFileContent = useCallback(async (path) => {
     try {
       setFileContent('Loading...');
-      const response = await fetch(
-        `https://api.github.com/repos/${username}/${repo}/contents/${path}?ref=${branch}`,
-        { headers }
-      );
+      const url = `https://api.github.com/repos/${config.username}/${config.repo}/contents/${path}`;
+      
+      const response = await fetch(url, { headers });
       
       if (!response.ok) {
         const errorData = await response.json();
@@ -81,23 +83,37 @@ const GithubViewer = () => {
       }
       
       const data = await response.json();
-      const content = atob(data.content);
-      setFileContent(content);
-      setError(null);
+      try {
+        const content = atob(data.content);
+        setFileContent(content);
+        setError(null);
+      } catch (e) {
+        throw new Error('Failed to decode file content');
+      }
     } catch (err) {
+      console.error('File fetch error:', err);
       setError(`Failed to load file: ${err.message}`);
       setFileContent('');
     }
-  }, [username, repo, branch, headers]);
+  }, [config.username, config.repo, headers]);
 
   useEffect(() => {
-    fetchRepoContents();
+    const initializeViewer = async () => {
+      try {
+        await fetchRepoContents();
+      } catch (err) {
+        console.error('Initialization error:', err);
+      }
+    };
+
+    initializeViewer();
+
     const interval = setInterval(() => {
       if (selectedFile) {
         fetchFileContent(selectedFile.path);
       }
       fetchRepoContents();
-    }, 30000); // Refresh every 30 seconds
+    }, 30000);
     
     return () => clearInterval(interval);
   }, [selectedFile, fetchRepoContents, fetchFileContent]);
@@ -127,7 +143,6 @@ const GithubViewer = () => {
     );
   };
 
-  // Rest of the component remains the same...
   const renderTree = (items, level = 0) => {
     if (!items) return null;
 
@@ -171,23 +186,51 @@ const GithubViewer = () => {
 
   if (loading && !repoData) {
     return (
-      <div className="flex items-center justify-center p-8">
-        <RefreshCw className="w-6 h-6 text-wow-gold animate-spin" />
-        <span className="ml-2 text-wow-gold">Loading repository...</span>
+      <div className="bg-black/30 rounded-lg border border-wow-border p-8">
+        <div className="flex flex-col items-center justify-center gap-4">
+          <RefreshCw className="w-8 h-8 text-wow-gold animate-spin" />
+          <div className="text-wow-gold text-center">
+            <p className="font-medium">Loading repository...</p>
+            <p className="text-sm text-wow-gold/70 mt-2">
+              Connecting to GitHub API
+            </p>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (error && !loading && !repoData) {
+    return (
+      <div className="bg-black/30 rounded-lg border border-wow-border p-8">
+        <div className="flex flex-col items-center justify-center gap-4">
+          <AlertTriangle className="w-8 h-8 text-red-500" />
+          <div className="text-center">
+            <h3 className="text-wow-gold font-medium">Repository Not Available</h3>
+            <p className="text-white/70 mt-2">
+              {error}
+            </p>
+            <button 
+              onClick={() => fetchRepoContents()}
+              className="mt-4 px-4 py-2 bg-wow-gold/20 text-wow-gold border border-wow-gold rounded hover:bg-wow-gold/30 transition-colors"
+            >
+              Retry Connection
+            </button>
+          </div>
+        </div>
       </div>
     );
   }
 
   return (
     <div className="bg-black/30 rounded-lg border border-wow-border">
-      {/* Header */}
       <div className="flex items-center justify-between p-4 border-b border-wow-border">
         <div className="flex items-center gap-2">
           <Github className="w-5 h-5 text-wow-gold" />
           <h3 className="text-wow-gold font-semibold">Repository Explorer</h3>
         </div>
         <a
-          href={`https://github.com/${username}/${repo}`}
+          href={`https://github.com/${config.username}/${config.repo}`}
           target="_blank"
           rel="noopener noreferrer"
           className="flex items-center gap-1 text-white/70 hover:text-wow-gold transition-colors"
@@ -206,7 +249,6 @@ const GithubViewer = () => {
         </div>
       )}
 
-      {/* Search Bar */}
       <div className="p-4 border-b border-wow-border">
         <div className="relative">
           <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-white/50" />
@@ -220,9 +262,7 @@ const GithubViewer = () => {
         </div>
       </div>
 
-      {/* Content */}
       <div className="grid grid-cols-1 lg:grid-cols-2 divide-x divide-wow-border">
-        {/* File Tree */}
         <div className="p-4 max-h-[600px] overflow-y-auto scrollbar-thin scrollbar-thumb-wow-gold/20 scrollbar-track-black/20">
           {repoData ? renderTree(repoData) : (
             <div className="text-white/50 text-center py-8">
@@ -231,7 +271,6 @@ const GithubViewer = () => {
           )}
         </div>
 
-        {/* File Content */}
         <div className="p-4 max-h-[600px] overflow-y-auto scrollbar-thin scrollbar-thumb-wow-gold/20 scrollbar-track-black/20">
           {selectedFile ? (
             <div>

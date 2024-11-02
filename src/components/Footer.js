@@ -2,14 +2,14 @@ import React from 'react';
 import { 
   Code2, 
   Coffee,
-  Boxes, // Frontend
+  Boxes,
   Monitor,
   Palette,
   Component,
-  Play, // Animation
+  Play,
   Move,
   Code,
-  Database, // State Management
+  Database,
   GitBranch,
   Terminal,
   Wrench,
@@ -17,6 +17,7 @@ import {
 } from 'lucide-react';
 import { useScrollAnimation } from '../hooks/useScrollAnimation';
 import footerBg from '../assets/stormwindgates.png';
+import GithubViewer from './GithubViewer';
 
 export const Footer = () => {
   const [footerRef, isVisible] = useScrollAnimation(0.1);
@@ -117,6 +118,15 @@ export const Footer = () => {
               </ul>
             </div>
           ))}
+        </div>
+
+        {/* GitHub Viewer Section */}
+        <div className={`mt-8 animate-fade ${isVisible ? 'fade-end' : 'fade-start'}`}>
+          <div className="flex items-center justify-center gap-2 mb-6">
+            <GitBranch className="w-6 h-6 text-wow-gold animate-float" />
+            <h2 className="text-2xl font-bold text-wow-gold">Latest Code</h2>
+          </div>
+          <GithubViewer />
         </div>
 
         <div className={`mt-8 text-center animate-fade ${isVisible ? 'fade-end' : 'fade-start'}`}>

@@ -1,4 +1,3 @@
-// Education.js
 import React from 'react';
 import { useScrollAnimation } from '../hooks/useScrollAnimation';
 import educationBg from '../assets/karalibrary.jpg';

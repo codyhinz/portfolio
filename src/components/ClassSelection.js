@@ -2,23 +2,23 @@ import React from 'react';
 import { useScrollAnimation } from '../hooks/useScrollAnimation';
 import { classes } from '../constants/classData';
 import { ChevronRight } from 'lucide-react';
-import warriorBg from '../assets/warriororderhall.png';
-import deathknightBg from '../assets/deathknightorderhall.jpg';
-import druidBg from '../assets/druidorderhall.jpg';
+// Warrior Icons 
 import warriorIcon from '../assets/warrior.png';
-import deathknightIcon from '../assets/deathknight.png';
-import druidIcon from '../assets/druid.png';
-
+import warriorBg from '../assets/warriororderhall.png';
 import mortalStrikeIcon from '../assets/arms.png';
 import tacticalMasteryIcon from '../assets/tacticalmastery.png';
 import battleShoutIcon from '../assets/battleshout.png';
 import victoryRushIcon from '../assets/victoryrush.png';
-
+// Death Knight Icons
+import deathknightIcon from '../assets/deathknight.png';
+import deathknightBg from '../assets/deathknightorderhall.jpg';
 import obliterateIcon from '../assets/obliterate.png';
 import deathGripIcon from '../assets/deathgrip.png';
 import pillarOfFrostIcon from '../assets/pillaroffrost.png';
 import runicPowerIcon from '../assets/empoweredruneweapon.png';
-
+// Druid Icons
+import druidIcon from '../assets/druid.png';
+import druidBg from '../assets/druidorderhall.jpg';
 import rakeIcon from '../assets/rake.png';
 import ripIcon from '../assets/rip.png';
 import savageRoarIcon from '../assets/savageroar.png';

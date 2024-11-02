@@ -1,4 +1,3 @@
-// Experience.js
 import React from 'react';
 import { useScrollAnimation } from '../hooks/useScrollAnimation';
 import { workExperience } from '../constants/experienceData';

@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { useScrollAnimation } from '../hooks/useScrollAnimation';
 import { Mail, MapPin, Phone, Check, Copy, ExternalLink, FileDown, Loader2 } from 'lucide-react';
 import contactBg from '../assets/shattrath.jpg';
-// Import your resume files
 import simpleResume from '../assets/resumes/Resume-Simple.docx';
 import completeResume from '../assets/resumes/Resume-Complete.pdf';
 

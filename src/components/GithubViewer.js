@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { 
   FolderOpen, 
   File, 
@@ -29,12 +29,15 @@ const GithubViewer = () => {
   const branch = 'main';
   const token = import.meta.env.VITE_GITHUB_TOKEN;
 
-  const headers = token ? {
-    Authorization: `token ${token}`,
-    Accept: 'application/vnd.github.v3+json',
-  } : {
-    Accept: 'application/vnd.github.v3+json',
-  };
+  // Memoize headers to prevent unnecessary rerenders
+  const headers = useMemo(() => {
+    return token ? {
+      Authorization: `token ${token}`,
+      Accept: 'application/vnd.github.v3+json',
+    } : {
+      Accept: 'application/vnd.github.v3+json',
+    };
+  }, [token]);
 
   const fetchRepoContents = useCallback(async (path = '') => {
     try {
@@ -124,6 +127,7 @@ const GithubViewer = () => {
     );
   };
 
+  // Rest of the component remains the same...
   const renderTree = (items, level = 0) => {
     if (!items) return null;
 

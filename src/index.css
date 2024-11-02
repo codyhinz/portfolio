@@ -2,6 +2,7 @@
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
 @import 'prismjs/themes/prism-tomorrow.css';
+@import './styles/animations.css';
 
 /* Custom scrollbar styles */
 @layer utilities {

@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/portfolio/static/css/main.bb064a80.css",
-    "main.js": "/portfolio/static/js/main.fbcafe63.js",
+    "main.css": "/portfolio/static/css/main.5ae3fa94.css",
+    "main.js": "/portfolio/static/js/main.7733e738.js",
     "static/js/453.ace21015.chunk.js": "/portfolio/static/js/453.ace21015.chunk.js",
     "static/media/stormwindwarroom.png": "/portfolio/static/media/stormwindwarroom.442f5fa4843dc5ad94f2.png",
     "static/media/pfp.png": "/portfolio/static/media/pfp.28745b46e26d439fba1d.png",
@@ -42,12 +42,12 @@
     "static/media/fury.png": "/portfolio/static/media/fury.dc7a6c4056ea8333d87e.png",
     "static/media/souldan.png": "/portfolio/static/media/souldan.e881a55222e476ad478d.png",
     "index.html": "/portfolio/index.html",
-    "main.bb064a80.css.map": "/portfolio/static/css/main.bb064a80.css.map",
-    "main.fbcafe63.js.map": "/portfolio/static/js/main.fbcafe63.js.map",
+    "main.5ae3fa94.css.map": "/portfolio/static/css/main.5ae3fa94.css.map",
+    "main.7733e738.js.map": "/portfolio/static/js/main.7733e738.js.map",
     "453.ace21015.chunk.js.map": "/portfolio/static/js/453.ace21015.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.bb064a80.css",
-    "static/js/main.fbcafe63.js"
+    "static/css/main.5ae3fa94.css",
+    "static/js/main.7733e738.js"
   ]
 }

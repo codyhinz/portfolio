@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Github, Linkedin } from 'lucide-react';
 import { useScrollAnimation } from '../hooks/useScrollAnimation';
+import LikeButton from './LikeButton';
 import pfp from '../assets/pfp.jpg';
 import pfp2 from '../assets/pfp.png';
 import headerBg from '../assets/orgthroneroom.jpg';
@@ -46,6 +47,11 @@ export const Header = () => {
           <Linkedin className="w-6 h-6 text-wow-gold" />
         </a>
       </div>
+
+      {/* Like Button positioned below social icons */}
+      <div className={`absolute top-20 right-4 animate-slide-right ${isVisible ? 'slide-right-end' : 'slide-right-start'}`}>
+        <LikeButton />
+      </div>
       
       <div className="flex flex-col md:flex-row gap-8 items-center p-4 md:p-8">
         <div className={`relative group w-32 md:w-48 animate-slide-right ${isVisible ? 'slide-right-end' : 'slide-right-start'}`}>
@@ -74,7 +80,6 @@ export const Header = () => {
           </div>
         </div>
         
-        {/* Rest of the component remains the same */}
         <div className="flex-1 space-y-4 text-center md:text-left">
           <h1 className={`text-4xl md:text-6xl font-bold mb-4 text-wow-gold animate-slide-right ${isVisible ? 'slide-right-end' : 'slide-right-start'}`}>
             Cody Hinz

@@ -3,18 +3,32 @@ import { db } from '../config/firebaseConfig';
 
 export const likeService = {
   async checkIfUserHasLiked(ipHash) {
-    const likeRef = ref(db, `likes/users/${ipHash}`);
-    const snapshot = await get(likeRef);
-    return snapshot.exists();
+    if (!ipHash) return false;
+    
+    try {
+      const likeRef = ref(db, `likes/users/${ipHash}`);
+      const snapshot = await get(likeRef);
+      return snapshot.exists();
+    } catch (error) {
+      console.error('Error checking like status:', error);
+      return false;
+    }
   },
 
   async getLikeCount() {
-    const countRef = ref(db, 'likes/count');
-    const snapshot = await get(countRef);
-    return snapshot.val() || 0;
+    try {
+      const countRef = ref(db, 'likes/count');
+      const snapshot = await get(countRef);
+      return snapshot.val() || 0;
+    } catch (error) {
+      console.error('Error getting like count:', error);
+      return 0;
+    }
   },
 
   async addLike(ipHash) {
+    if (!ipHash) return false;
+
     const userLikeRef = ref(db, `likes/users/${ipHash}`);
     const countRef = ref(db, 'likes/count');
 
@@ -25,7 +39,7 @@ export const likeService = {
         return false;
       }
 
-      // Atomic transaction to update like count
+      // Use transaction to ensure atomic update
       await runTransaction(countRef, (currentCount) => {
         return (currentCount || 0) + 1;
       });
